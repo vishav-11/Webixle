@@ -23,7 +23,7 @@ export default function AboutPage() {
       <WhatWeDo/>
       <WhyChooseUs/>
       <OurValues/>
-      <TeamSection/>
+      {/* <TeamSection/> */}
 
     </>
   );

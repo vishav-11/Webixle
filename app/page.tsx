@@ -21,10 +21,10 @@ export default function HomePage() {
       <Hero />
       <Services />
       <WhyChooseUs />
-      <TechStack/>
+      {/* <TechStack/> */}
       <WorkProcess/>
       <Portfolio/>
-      <Testimonials/>
+      {/* <Testimonials/> */}
       <FAQ/>
       <CTABanner/>
 
