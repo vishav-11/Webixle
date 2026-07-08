@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   CheckCircle,
@@ -14,6 +15,10 @@ import {
   Clock,
   HeartHandshake,
 } from "lucide-react";
+
+import DarkBg from "../../../public/Image/banners/herobg.png";
+import LightBg from "../../../public/Image/banners/lightbg.png";
+import { useTheme } from "next-themes";
 
 // ============================================
 // CONSTANTS
@@ -67,13 +72,38 @@ const TRUST_POINTS = [
 // BACKGROUND
 // ============================================
 
-const HeroBackground: React.FC = () => (
-  <>
-    <div className="hero-glow" />
-    <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-primary-500/8 blur-[100px] animate-pulse-slow pointer-events-none" />
-    <div className="absolute bottom-20 left-0 w-80 h-80 rounded-full bg-accent-500/8 blur-[80px] animate-pulse-slow pointer-events-none" />
-  </>
-);
+const HeroBackground: React.FC = () => {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <>
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={isDark ? DarkBg : LightBg}
+          alt="Hero Background"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+
+        {/* Light overlay for better text readability */}
+        <div 
+          className={`absolute inset-0 ${
+            isDark 
+              ? "bg-black/70" 
+              : "bg-white/60"
+          }`} 
+        />
+      </div>
+
+      {/* Existing Glow Effects */}
+      <div className="hero-glow" />
+      <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-primary-500/8 blur-[100px] animate-pulse-slow pointer-events-none" />
+      <div className="absolute bottom-20 left-0 w-80 h-80 rounded-full bg-accent-500/8 blur-[80px] animate-pulse-slow pointer-events-none" />
+    </>
+  );
+};
 
 // ============================================
 // SERVICE VISUAL (Right Column)

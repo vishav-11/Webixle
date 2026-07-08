@@ -417,7 +417,6 @@
 //     </>
 //   );
 // };
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -488,40 +487,35 @@ export const Navbar: React.FC = () => {
               : "max-w-[96%] rounded-[100px] mt-3"
           )}
           style={{
-            /* Light → white/85  |  Dark → bg-card (#1a1a2e) /90 */
             background: isScrolled
               ? isDark
-                ? "rgba(15, 15, 26, 0.90)"          /* --bg-primary dark */
-                : "rgba(255, 255, 255, 0.90)"        /* --bg-primary light */
+                ? "rgba(15, 15, 26, 0.90)"
+                : "rgba(255, 255, 255, 0.90)"
               : isDark
-                ? "rgba(26, 26, 46, 0.80)"             /* --bg-card dark */
-                : "rgba(255, 255, 255, 0.80)",         /* --bg-card light */
+                ? "rgba(26, 26, 46, 0.80)"
+                : "rgba(255, 255, 255, 0.80)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
-            /* border */
             border: isScrolled
-              ? isDark
-                ? "none"
-                : "none"
+              ? "none"
               : isDark
-                ? "1px solid rgba(255,255,255,0.08)"   /* --border-primary dark */
-                : "1px solid rgba(226,232,240,0.80)",  /* --border-primary light */
+                ? "1px solid rgba(255,255,255,0.08)"
+                : "1px solid rgba(226,232,240,0.80)",
             borderBottom: isScrolled
               ? isDark
                 ? "1px solid rgba(255,255,255,0.06)"
                 : "1px solid rgba(226,232,240,0.60)"
               : undefined,
-            /* shadow */
             boxShadow: isScrolled
               ? isDark
-                ? "0 4px 30px rgba(0,0,0,0.40)"      /* --shadow-md dark */
-                : "0 4px 30px rgba(0,0,0,0.07)"      /* --shadow-md light */
+                ? "0 4px 30px rgba(0,0,0,0.40)"
+                : "0 4px 30px rgba(0,0,0,0.07)"
               : isDark
                 ? "0 8px 40px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05)"
                 : "0 8px 40px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,1)",
           }}
         >
-          <nav className="px-4 sm:px-6 lg:px-8">
+          <nav className="px-4 lg:px-6">
             <div className="flex items-center justify-between h-15.5">
 
               {/* ── Logo ── */}
@@ -530,13 +524,13 @@ export const Navbar: React.FC = () => {
                 aria-label={COMPANY.name}
                 className="shrink-0 flex items-center group"
               >
-                <div className="relative h-50 w-50">
+                <div className="relative h-80 w-55 -m-7.5">
                   <Image
                     key={logoSrc}
                     src={logoSrc}
                     alt={COMPANY.name}
                     fill
-                    sizes="120px"
+                    sizes="200px"
                     className="object-contain object-left transition-all duration-300 group-hover:scale-[1.02]"
                     priority
                   />
@@ -548,8 +542,8 @@ export const Navbar: React.FC = () => {
                 className="hidden lg:flex items-center gap-0.5 rounded-full px-2 py-1.5"
                 style={{
                   background: isDark
-                    ? "rgba(255,255,255,0.03)"       /* --bg-tertiary dark subtle */
-                    : "rgba(241,245,249,0.80)",       /* --bg-tertiary light */
+                    ? "rgba(255,255,255,0.03)"
+                    : "rgba(241,245,249,0.80)",
                   border: isDark
                     ? "1px solid rgba(255,255,255,0.06)"
                     : "1px solid rgba(226,232,240,0.80)",
@@ -562,8 +556,7 @@ export const Navbar: React.FC = () => {
                     onMouseEnter={() => setActiveHover(link.href)}
                     onMouseLeave={() => setActiveHover(null)}
                     className={cn(
-                      "relative px-4 py-2 rounded-full text-sm font-medium",
-                      "transition-colors duration-200",
+                      "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200",
                       isActive(link.href)
                         ? isDark
                           ? "text-white"
@@ -573,27 +566,28 @@ export const Navbar: React.FC = () => {
                           : "text-[#475569] hover:text-[#0f172a]"
                     )}
                   >
-                    {/* Active linear pill */}
+                    {/* Active linear Pill */}
                     {isActive(link.href) && (
                       <motion.span
                         layoutId="activeNavPill"
                         className="absolute inset-0 rounded-full"
                         style={{
-                          background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", /* --linear-primary */
-                          boxShadow: "0 4px 15px rgba(99,102,241,0.40)",                  /* --shadow-glow */
+                          background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)",
+                          boxShadow: "0 4px 15px rgba(99,102,241,0.40)",
                         }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
-                    {/* Hover pill */}
+
+                    {/* Hover Pill */}
                     {!isActive(link.href) && activeHover === link.href && (
                       <motion.span
                         layoutId="hoverNavPill"
                         className="absolute inset-0 rounded-full"
                         style={{
                           background: isDark
-                            ? "rgba(255,255,255,0.06)"   /* --bg-tertiary dark */
-                            : "rgba(226,232,240,0.60)",  /* --border-primary light tint */
+                            ? "rgba(255,255,255,0.06)"
+                            : "rgba(226,232,240,0.60)",
                         }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -614,13 +608,11 @@ export const Navbar: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                   className="relative p-2.5 rounded-full transition-all duration-200"
                   style={{
-                    background: isDark
-                      ? "rgba(30,30,53,1)"             /* --bg-tertiary dark */
-                      : "rgba(241,245,249,1)",          /* --bg-tertiary light */
+                    background: isDark ? "rgba(30,30,53,1)" : "rgba(241,245,249,1)",
                     border: isDark
                       ? "1px solid rgba(255,255,255,0.08)"
                       : "1px solid rgba(226,232,240,1)",
-                    color: isDark ? "#94a3b8" : "#475569", /* --text-secondary */
+                    color: isDark ? "#94a3b8" : "#475569",
                   }}
                 >
                   <AnimatePresence mode="wait" initial={false}>
@@ -659,9 +651,9 @@ export const Navbar: React.FC = () => {
                     style={{
                       background: "transparent",
                       border: isDark
-                        ? "1px solid rgba(255,255,255,0.08)"   /* --border-primary dark */
-                        : "1px solid rgba(226,232,240,1)",     /* --border-primary light */
-                      color: isDark ? "#94a3b8" : "#475569",   /* --text-secondary */
+                        ? "1px solid rgba(255,255,255,0.08)"
+                        : "1px solid rgba(226,232,240,1)",
+                      color: isDark ? "#94a3b8" : "#475569",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a";
@@ -678,7 +670,7 @@ export const Navbar: React.FC = () => {
                   </motion.button>
                 </Link>
 
-                {/* Get Started — linear CTA */}
+                {/* Get Started Button */}
                 <Link href="/demo">
                   <motion.button
                     whileHover={{
@@ -688,24 +680,13 @@ export const Navbar: React.FC = () => {
                     whileTap={{ scale: 0.97 }}
                     className="relative px-5 py-2 rounded-full text-sm font-semibold text-white overflow-hidden group"
                     style={{
-                      background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", /* --linear-primary */
+                      background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)",
                       boxShadow: "0 4px 15px rgba(99,102,241,0.35)",
                     }}
                   >
-                    {/* Shine sweep */}
                     <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-                    <span
-                      className={cn(
-                        "relative flex items-center gap-1.5",
-                        isDark ? "text-white" : "text-[#0f172a]"
-                      )}
-                    >
-                      <Zap
-                        size={14}
-                        className={cn(
-                          isDark ? "fill-white text-white" : "fill-[#0f172a] text-[#0f172a]"
-                        )}
-                      />
+                    <span className="relative flex items-center gap-1.5">
+                      <Zap size={14} className="fill-white" />
                       Get Started
                     </span>
                   </motion.button>
@@ -734,25 +715,11 @@ export const Navbar: React.FC = () => {
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     {isMobileOpen ? (
-                      <motion.span
-                        key="close"
-                        initial={{ rotate: -90, opacity: 0 }}
-                        animate={{ rotate: 0, opacity: 1 }}
-                        exit={{ rotate: 90, opacity: 0 }}
-                        transition={{ duration: 0.15 }}
-                        className="flex"
-                      >
+                      <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }} className="flex">
                         <X size={20} />
                       </motion.span>
                     ) : (
-                      <motion.span
-                        key="menu"
-                        initial={{ rotate: 90, opacity: 0 }}
-                        animate={{ rotate: 0, opacity: 1 }}
-                        exit={{ rotate: -90, opacity: 0 }}
-                        transition={{ duration: 0.15 }}
-                        className="flex"
-                      >
+                      <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }} className="flex">
                         <Menu size={20} />
                       </motion.span>
                     )}
@@ -771,7 +738,7 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {isMobileOpen && (
           <>
-            {/* ── Backdrop ── */}
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -779,16 +746,14 @@ export const Navbar: React.FC = () => {
               transition={{ duration: 0.25 }}
               className="fixed inset-0 z-90 lg:hidden"
               style={{
-                background: isDark
-                  ? "rgba(5, 5, 15, 0.70)"    /* over --bg-primary dark */
-                  : "rgba(15, 23, 42, 0.35)",  /* over --bg-primary light */
+                background: isDark ? "rgba(5, 5, 15, 0.70)" : "rgba(15, 23, 42, 0.35)",
                 backdropFilter: "blur(4px)",
                 WebkitBackdropFilter: "blur(4px)",
               }}
               onClick={() => setIsMobileOpen(false)}
             />
 
-            {/* ── Drawer Panel ── */}
+            {/* Drawer Panel */}
             <motion.div
               role="dialog"
               aria-modal="true"
@@ -797,9 +762,9 @@ export const Navbar: React.FC = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 30, stiffness: 280 }}
-              className="fixed right-3 top-3 bottom-3 z-95 w-75 max-w-[88vw] lg:hidden"
+              className="fixed right-3 top-3 bottom-3 z-95 w-70 max-w-[88vw] lg:hidden"
             >
-              {/* linear glow ring (matches --linear-primary) */}
+              {/* Glow Ring */}
               <div
                 className="absolute -inset-px rounded-[28px] pointer-events-none"
                 style={{
@@ -808,295 +773,89 @@ export const Navbar: React.FC = () => {
                 }}
               />
 
-              {/* Glass panel */}
+              {/* Glass Panel */}
               <div
                 className="relative flex flex-col h-full rounded-[28px] overflow-hidden"
                 style={{
-                  /* --bg-card per theme */
-                  background: isDark
-                    ? "rgba(26, 26, 46, 0.92)"   /* --bg-card dark */
-                    : "rgba(255, 255, 255, 0.92)",/* --bg-card light */
+                  background: isDark ? "rgba(26, 26, 46, 0.92)" : "rgba(255, 255, 255, 0.92)",
                   backdropFilter: "blur(28px)",
                   WebkitBackdropFilter: "blur(28px)",
                   border: isDark
-                    ? "1px solid rgba(255,255,255,0.08)"  /* --border-primary dark */
-                    : "1px solid rgba(226,232,240,0.90)", /* --border-primary light */
+                    ? "1px solid rgba(255,255,255,0.08)"
+                    : "1px solid rgba(226,232,240,0.90)",
                   boxShadow: isDark
-                    ? "0 25px 60px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.05)" /* --shadow-xl dark */
-                    : "0 25px 60px rgba(99,102,241,0.10), inset 0 1px 0 rgba(255,255,255,1)", /* --shadow-xl light */
+                    ? "0 25px 60px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.05)"
+                    : "0 25px 60px rgba(99,102,241,0.10), inset 0 1px 0 rgba(255,255,255,1)",
                 }}
               >
+                {/* Decorative Blobs */}
+                <div className="absolute top-0 right-0 w-52 h-52 rounded-full pointer-events-none" style={{ background: isDark ? "radial-linear(circle, rgba(99,102,241,0.18) 0%, rgba(217,70,239,0.10) 60%, transparent 100%)" : "radial-linear(circle, rgba(99,102,241,0.08) 0%, rgba(217,70,239,0.04) 60%, transparent 100%)", filter: "blur(35px)" }} />
+                <div className="absolute bottom-24 left-0 w-40 h-40 rounded-full pointer-events-none" style={{ background: isDark ? "radial-linear(circle, rgba(217,70,239,0.12) 0%, rgba(99,102,241,0.08) 60%, transparent 100%)" : "radial-linear(circle, rgba(217,70,239,0.06) 0%, rgba(99,102,241,0.04) 60%, transparent 100%)", filter: "blur(28px)" }} />
 
-                {/* Decorative blobs using brand colours */}
-                <div
-                  className="absolute top-0 right-0 w-52 h-52 rounded-full pointer-events-none"
-                  style={{
-                    background: isDark
-                      ? "radial-linear(circle, rgba(99,102,241,0.18) 0%, rgba(217,70,239,0.10) 60%, transparent 100%)"
-                      : "radial-linear(circle, rgba(99,102,241,0.08) 0%, rgba(217,70,239,0.04) 60%, transparent 100%)",
-                    filter: "blur(35px)",
-                  }}
-                />
-                <div
-                  className="absolute bottom-24 left-0 w-40 h-40 rounded-full pointer-events-none"
-                  style={{
-                    background: isDark
-                      ? "radial-linear(circle, rgba(217,70,239,0.12) 0%, rgba(99,102,241,0.08) 60%, transparent 100%)"
-                      : "radial-linear(circle, rgba(217,70,239,0.06) 0%, rgba(99,102,241,0.04) 60%, transparent 100%)",
-                    filter: "blur(28px)",
-                  }}
-                />
-
-                {/* ── Drawer Header ── */}
+                {/* Drawer Header */}
                 <div className="relative flex items-center justify-between px-5 pt-5 pb-4">
-                  <Link
-                    href="/"
-                    onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center"
-                  >
-                    <div className="relative h-11 w-40">
-                      <Image
-                        key={logoSrc}
-                        src={logoSrc}
-                        alt={COMPANY.name}
-                        fill
-                        sizes="160px"
-                        className="object-contain object-left"
-                        priority
-                      />
+                  <Link href="/" onClick={() => setIsMobileOpen(false)} className="flex items-center">
+                    <div className="relative h-11 w-36">
+                      <Image key={logoSrc} src={logoSrc} alt={COMPANY.name} fill sizes="144px" className="object-contain object-left" priority />
                     </div>
                   </Link>
 
-                  <motion.button
-                    onClick={() => setIsMobileOpen(false)}
-                    aria-label="Close menu"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-2 rounded-full transition-all duration-200"
-                    style={{
-                      background: isDark
-                        ? "rgba(30,30,53,1)"             /* --bg-tertiary dark */
-                        : "rgba(241,245,249,1)",          /* --bg-tertiary light */
-                      border: isDark
-                        ? "1px solid rgba(255,255,255,0.08)"
-                        : "1px solid rgba(226,232,240,1)",
-                      color: isDark ? "#64748b" : "#94a3b8", /* --text-tertiary */
-                    }}
-                  >
+                  <motion.button onClick={() => setIsMobileOpen(false)} aria-label="Close menu" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="p-2 rounded-full transition-all duration-200" style={{ background: isDark ? "rgba(30,30,53,1)" : "rgba(241,245,249,1)", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(226,232,240,1)", color: isDark ? "#64748b" : "#94a3b8" }}>
                     <X size={15} />
                   </motion.button>
                 </div>
 
-                {/* linear divider */}
-                <div
-                  className="mx-5 h-px mb-3"
-                  style={{
-                    background: isDark
-                      ? "linear-linear(90deg, transparent, rgba(255,255,255,0.07), transparent)"
-                      : "linear-linear(90deg, transparent, rgba(99,102,241,0.15), transparent)",
-                  }}
-                />
+                {/* Divider */}
+                <div className="mx-5 h-px mb-3" style={{ background: isDark ? "linear-linear(90deg, transparent, rgba(255,255,255,0.07), transparent)" : "linear-linear(90deg, transparent, rgba(99,102,241,0.15), transparent)" }} />
 
-                {/* ── Nav Links ── */}
+                {/* Nav Links */}
                 <nav className="relative flex-1 overflow-y-auto px-3 pb-2">
                   <ul className="space-y-1">
                     {NAV_LINKS.map((link, index) => (
-                      <motion.li
-                        key={link.href}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          delay: 0.05 + index * 0.055,
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 24,
-                        }}
-                      >
-                        <Link
-                          href={link.href}
-                          onClick={() => setIsMobileOpen(false)}
-                          className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200"
-                          style={
-                            isActive(link.href)
-                              ? {
-                                /* Active: linear-primary */
-                                background: "linear-linear(135deg, rgba(99,102,241,0.88) 0%, rgba(217,70,239,0.88) 100%)",
-                                color: "#ffffff",
-                                boxShadow: "0 4px 15px rgba(99,102,241,0.30)",
-                              }
-                              : {
-                                color: isDark ? "#94a3b8" : "#475569", /* --text-secondary */
-                              }
-                          }
-                          onMouseEnter={(e) => {
-                            if (!isActive(link.href)) {
-                              e.currentTarget.style.background = isDark
-                                ? "rgba(255,255,255,0.05)"
-                                : "rgba(241,245,249,1)";
-                              e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a";
-                            }
-                          }}
-                          onMouseLeave={(e) => {
-                            if (!isActive(link.href)) {
-                              e.currentTarget.style.background = "transparent";
-                              e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569";
-                            }
-                          }}
-                        >
+                      <motion.li key={link.href} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + index * 0.055, type: "spring", stiffness: 300, damping: 24 }}>
+                        <Link href={link.href} onClick={() => setIsMobileOpen(false)} className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200" style={isActive(link.href) ? { background: "linear-linear(135deg, rgba(99,102,241,0.88) 0%, rgba(217,70,239,0.88) 100%)", color: "#ffffff", boxShadow: "0 4px 15px rgba(99,102,241,0.30)" } : { color: isDark ? "#94a3b8" : "#475569" }} onMouseEnter={(e) => { if (!isActive(link.href)) { e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(241,245,249,1)"; e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a"; } }} onMouseLeave={(e) => { if (!isActive(link.href)) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569"; } }}>
                           <span>{link.label}</span>
-                          {isActive(link.href) ? (
-                            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
-                          ) : (
-                            <ArrowRight
-                              size={13}
-                              style={{ color: isDark ? "#64748b" : "#cbd5e1" }} /* --text-tertiary */
-                            />
-                          )}
+                          {isActive(link.href) ? <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" /> : <ArrowRight size={13} style={{ color: isDark ? "#64748b" : "#cbd5e1" }} />}
                         </Link>
                       </motion.li>
                     ))}
                   </ul>
 
-                  {/* Quick Info card — matches sidebar cards on contact page */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.30 }}
-                    className="mt-4 mx-1 p-4 rounded-2xl"
-                    style={{
-                      background: isDark
-                        ? "linear-linear(135deg, rgba(99,102,241,0.12) 0%, rgba(217,70,239,0.07) 100%)"
-                        : "linear-linear(135deg, rgba(99,102,241,0.06) 0%, rgba(217,70,239,0.03) 100%)",
-                      border: isDark
-                        ? "1px solid rgba(99,102,241,0.20)"
-                        : "1px solid rgba(99,102,241,0.12)",
-                    }}
-                  >
+                  {/* Quick Info Card */}
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.30 }} className="mt-4 mx-1 p-4 rounded-2xl" style={{ background: isDark ? "linear-linear(135deg, rgba(99,102,241,0.12) 0%, rgba(217,70,239,0.07) 100%)" : "linear-linear(135deg, rgba(99,102,241,0.06) 0%, rgba(217,70,239,0.03) 100%)", border: isDark ? "1px solid rgba(99,102,241,0.20)" : "1px solid rgba(99,102,241,0.12)" }}>
                     <div className="flex items-center gap-2 mb-1.5">
                       <Sparkles size={13} style={{ color: isDark ? "#818cfb" : "#6366f1" }} />
-                      <p
-                        className="text-xs font-bold uppercase tracking-wider"
-                        style={{ color: isDark ? "#818cfb" : "#6366f1" }} /* --text-brand */
-                      >
-                        Quick Actions
-                      </p>
+                      <p className="text-xs font-bold uppercase tracking-wider" style={{ color: isDark ? "#818cfb" : "#6366f1" }}>Quick Actions</p>
                     </div>
-                    <p
-                      className="text-xs leading-relaxed"
-                      style={{ color: isDark ? "#64748b" : "#94a3b8" }} /* --text-tertiary */
-                    >
-                      Start automating your workflows today. No credit card required.
-                    </p>
+                    <p className="text-xs leading-relaxed" style={{ color: isDark ? "#64748b" : "#94a3b8" }}>Start automating your workflows today. No credit card required.</p>
                   </motion.div>
                 </nav>
 
-                {/* linear divider */}
-                <div
-                  className="mx-5 h-px"
-                  style={{
-                    background: isDark
-                      ? "linear-linear(90deg, transparent, rgba(255,255,255,0.06), transparent)"
-                      : "linear-linear(90deg, transparent, rgba(99,102,241,0.12), transparent)",
-                  }}
-                />
+                {/* Divider */}
+                <div className="mx-5 h-px" style={{ background: isDark ? "linear-linear(90deg, transparent, rgba(255,255,255,0.06), transparent)" : "linear-linear(90deg, transparent, rgba(99,102,241,0.12), transparent)" }} />
 
-                {/* ── Drawer Footer ── */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.20 }}
-                  className="relative shrink-0 px-4 py-5 space-y-3"
-                >
-                  {/* Theme toggle row */}
+                {/* Drawer Footer */}
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.20 }} className="relative shrink-0 px-4 py-5 space-y-3">
                   <div className="flex items-center justify-between px-1 mb-1">
-                    <span
-                      className="text-xs font-medium"
-                      style={{ color: isDark ? "#64748b" : "#94a3b8" }} /* --text-tertiary */
-                    >
-                      {isDark ? "Dark Mode" : "Light Mode"}
-                    </span>
-                    <motion.button
-                      onClick={toggleTheme}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-                      style={{
-                        background: isDark
-                          ? "rgba(30,30,53,1)"           /* --bg-tertiary dark */
-                          : "rgba(241,245,249,1)",        /* --bg-tertiary light */
-                        border: isDark
-                          ? "1px solid rgba(255,255,255,0.08)"
-                          : "1px solid rgba(226,232,240,1)",
-                        color: isDark ? "#94a3b8" : "#475569",
-                      }}
-                    >
-                      {mounted && isDark
-                        ? <><Sun size={12} />&nbsp;Light</>
-                        : <><Moon size={12} />&nbsp;Dark</>
-                      }
+                    <span className="text-xs font-medium" style={{ color: isDark ? "#64748b" : "#94a3b8" }}>{isDark ? "Dark Mode" : "Light Mode"}</span>
+                    <motion.button onClick={toggleTheme} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200" style={{ background: isDark ? "rgba(30,30,53,1)" : "rgba(241,245,249,1)", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(226,232,240,1)", color: isDark ? "#94a3b8" : "#475569" }}>
+                      {mounted && isDark ? <><Sun size={12} />&nbsp;Light</> : <><Moon size={12} />&nbsp;Dark</>}
                     </motion.button>
                   </div>
 
-                  {/* Sign In button */}
-                  <Link
-                    href="/contact"
-                    className="block"
-                    onClick={() => setIsMobileOpen(false)}
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      className="w-full py-2.5 rounded-2xl text-sm font-medium transition-all duration-200"
-                      style={{
-                        background: "transparent",
-                        border: isDark
-                          ? "1px solid rgba(255,255,255,0.08)"
-                          : "1px solid rgba(226,232,240,1)",
-                        color: isDark ? "#94a3b8" : "#475569",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = isDark
-                          ? "rgba(255,255,255,0.05)"
-                          : "rgba(241,245,249,1)";
-                        e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569";
-                      }}
-                    >
+                  <Link href="/contact" className="block" onClick={() => setIsMobileOpen(false)}>
+                    <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="w-full py-2.5 rounded-2xl text-sm font-medium transition-all duration-200" style={{ background: "transparent", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(226,232,240,1)", color: isDark ? "#94a3b8" : "#475569" }} onMouseEnter={(e) => { e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(241,245,249,1)"; e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569"; }}>
                       Sign In
                     </motion.button>
                   </Link>
 
-                  {/* Get Started linear button */}
-                  <Link
-                    href="/demo"
-                    className="block"
-                    onClick={() => setIsMobileOpen(false)}
-                  >
-                    <motion.button
-                      whileHover={{
-                        scale: 1.01,
-                        boxShadow: "0 8px 25px rgba(99,102,241,0.45)",
-                      }}
-                      whileTap={{ scale: 0.99 }}
-                      className="relative w-full py-2.5 rounded-2xl text-sm font-semibold text-white overflow-hidden group"
-                      style={{
-                        background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", /* --linear-primary */
-                        boxShadow: "0 4px 15px rgba(99,102,241,0.35)",
-                      }}
-                    >
-                      {/* Shine sweep */}
+                  <Link href="/demo" className="block" onClick={() => setIsMobileOpen(false)}>
+                    <motion.button whileHover={{ scale: 1.01, boxShadow: "0 8px 25px rgba(99,102,241,0.45)" }} whileTap={{ scale: 0.99 }} className="relative w-full py-2.5 rounded-2xl text-sm font-semibold text-white overflow-hidden group" style={{ background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", boxShadow: "0 4px 15px rgba(99,102,241,0.35)" }}>
                       <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                      <span className="relative flex items-center justify-center gap-2">
-                        <Zap size={14} className="fill-white" />
-                        Get Started Free
-                      </span>
+                      <span className="relative flex items-center justify-center gap-2"><Zap size={14} className="fill-white" />Get Started Free</span>
                     </motion.button>
                   </Link>
                 </motion.div>
-
               </div>
             </motion.div>
           </>

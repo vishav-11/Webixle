@@ -11,7 +11,7 @@ import Banner4 from "@/public/Image/banners/mobiledevelop.png";
 import Banner5 from "@/public/Image/banners/blockchain.png";
 import Banner6 from "@/public/Image/banners/GraphicDesignBranding.png";
 import Banner7 from "@/public/Image/banners/uiux.png";
-import Banner8 from "@/public/Image/banners/webdevelop.png";
+import Banner8 from "@/public/Image/banners/dgmarketing.png";
 
 // ============================================
 // TYPES
