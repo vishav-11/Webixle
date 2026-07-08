@@ -465,8 +465,8 @@ export const Navbar: React.FC = () => {
   const logoSrc = !mounted
     ? "/Image/WebLogo/Dark.png"
     : isDark
-    ? "/Image/WebLogo/Light.png"
-    : "/Image/WebLogo/Dark.png";
+      ? "/Image/WebLogo/Light.png"
+      : "/Image/WebLogo/Dark.png";
 
   return (
     <>
@@ -494,8 +494,8 @@ export const Navbar: React.FC = () => {
                 ? "rgba(15, 15, 26, 0.90)"          /* --bg-primary dark */
                 : "rgba(255, 255, 255, 0.90)"        /* --bg-primary light */
               : isDark
-              ? "rgba(26, 26, 46, 0.80)"             /* --bg-card dark */
-              : "rgba(255, 255, 255, 0.80)",         /* --bg-card light */
+                ? "rgba(26, 26, 46, 0.80)"             /* --bg-card dark */
+                : "rgba(255, 255, 255, 0.80)",         /* --bg-card light */
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             /* border */
@@ -504,8 +504,8 @@ export const Navbar: React.FC = () => {
                 ? "none"
                 : "none"
               : isDark
-              ? "1px solid rgba(255,255,255,0.08)"   /* --border-primary dark */
-              : "1px solid rgba(226,232,240,0.80)",  /* --border-primary light */
+                ? "1px solid rgba(255,255,255,0.08)"   /* --border-primary dark */
+                : "1px solid rgba(226,232,240,0.80)",  /* --border-primary light */
             borderBottom: isScrolled
               ? isDark
                 ? "1px solid rgba(255,255,255,0.06)"
@@ -517,8 +517,8 @@ export const Navbar: React.FC = () => {
                 ? "0 4px 30px rgba(0,0,0,0.40)"      /* --shadow-md dark */
                 : "0 4px 30px rgba(0,0,0,0.07)"      /* --shadow-md light */
               : isDark
-              ? "0 8px 40px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05)"
-              : "0 8px 40px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,1)",
+                ? "0 8px 40px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05)"
+                : "0 8px 40px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,1)",
           }}
         >
           <nav className="px-4 sm:px-6 lg:px-8">
@@ -565,10 +565,12 @@ export const Navbar: React.FC = () => {
                       "relative px-4 py-2 rounded-full text-sm font-medium",
                       "transition-colors duration-200",
                       isActive(link.href)
-                        ? "text-white"
+                        ? isDark
+                          ? "text-white"
+                          : "text-[#0f172a]"
                         : isDark
-                        ? "text-[#94a3b8] hover:text-[#f1f5f9]"   /* --text-secondary / --text-primary dark */
-                        : "text-[#475569] hover:text-[#0f172a]"    /* --text-secondary / --text-primary light */
+                          ? "text-[#94a3b8] hover:text-white"
+                          : "text-[#475569] hover:text-[#0f172a]"
                     )}
                   >
                     {/* Active linear pill */}
@@ -692,8 +694,18 @@ export const Navbar: React.FC = () => {
                   >
                     {/* Shine sweep */}
                     <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-                    <span className="relative flex items-center gap-1.5">
-                      <Zap size={14} className="fill-white" />
+                    <span
+                      className={cn(
+                        "relative flex items-center gap-1.5",
+                        isDark ? "text-white" : "text-[#0f172a]"
+                      )}
+                    >
+                      <Zap
+                        size={14}
+                        className={cn(
+                          isDark ? "fill-white text-white" : "fill-[#0f172a] text-[#0f172a]"
+                        )}
+                      />
                       Get Started
                     </span>
                   </motion.button>
@@ -907,14 +919,14 @@ export const Navbar: React.FC = () => {
                           style={
                             isActive(link.href)
                               ? {
-                                  /* Active: linear-primary */
-                                  background: "linear-linear(135deg, rgba(99,102,241,0.88) 0%, rgba(217,70,239,0.88) 100%)",
-                                  color: "#ffffff",
-                                  boxShadow: "0 4px 15px rgba(99,102,241,0.30)",
-                                }
+                                /* Active: linear-primary */
+                                background: "linear-linear(135deg, rgba(99,102,241,0.88) 0%, rgba(217,70,239,0.88) 100%)",
+                                color: "#ffffff",
+                                boxShadow: "0 4px 15px rgba(99,102,241,0.30)",
+                              }
                               : {
-                                  color: isDark ? "#94a3b8" : "#475569", /* --text-secondary */
-                                }
+                                color: isDark ? "#94a3b8" : "#475569", /* --text-secondary */
+                              }
                           }
                           onMouseEnter={(e) => {
                             if (!isActive(link.href)) {
