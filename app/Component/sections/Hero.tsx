@@ -82,7 +82,7 @@ const HeroBackground: React.FC = () => (
 const ServiceVisual: React.FC = () => (
   <div className="relative w-full max-w-md">
     {/* Glow */}
-    <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-500/10 to-accent-500/10 blur-2xl scale-105" />
+    <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-500/10 to-accent-500/10 blur-2xl scale-105" />
 
     {/* Main Card */}
     <div
@@ -163,7 +163,7 @@ const ServiceVisual: React.FC = () => (
           bg-card-theme border border-card-theme shadow-lg"
       >
         <div
-          className="w-7 h-7 rounded-full bg-gradient-to-br from-green-400 to-green-600
+          className="w-7 h-7 rounded-full bg-linear-to-br from-green-400 to-green-600
             flex items-center justify-center shrink-0"
         >
           <CheckCircle size={13} className="text-white" />
@@ -192,7 +192,7 @@ const ServiceVisual: React.FC = () => (
           ].map((c, i) => (
             <div
               key={i}
-              className={`w-5 h-5 rounded-full bg-gradient-to-br ${c} border-2 border-card-theme`}
+              className={`w-5 h-5 rounded-full bg-linear-to-br ${c} border-2 border-card-theme`}
             />
           ))}
         </div>
@@ -242,11 +242,11 @@ export const Hero: React.FC = () => {
                 tracking-tight leading-[1.1] mb-5"
             >
               <span className="text-primary-theme">We Build </span>
-              <span className="gradient-text">Digital Products</span>
+              <span className="linear-text">Digital Products</span>
               <br />
               <span className="text-primary-theme">That Drive </span>
               <span className="relative inline-block">
-                <span className="gradient-text">Real Results</span>
+                <span className="linear-text">Real Results</span>
                 <svg
                   className="absolute -bottom-1.5 left-0 w-full"
                   viewBox="0 0 300 10"
@@ -299,9 +299,9 @@ export const Hero: React.FC = () => {
                     text-white overflow-hidden transition-all duration-300
                     hover:scale-[1.02] active:scale-95"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-600" />
+                  <span className="absolute inset-0 bg-linear-to-r from-primary-600 to-accent-600" />
                   <span
-                    className="absolute inset-0 bg-gradient-to-r from-primary-700 to-accent-700
+                    className="absolute inset-0 bg-linear-to-r from-primary-700 to-accent-700
                       opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                   <span className="relative flex items-center gap-2">
@@ -338,7 +338,7 @@ export const Hero: React.FC = () => {
                 {SOCIAL_PROOF_AVATARS.map((avatar, i) => (
                   <div
                     key={avatar.initials}
-                    className={`w-8 h-8 rounded-full bg-gradient-to-br ${avatar.color}
+                    className={`w-8 h-8 rounded-full bg-linear-to-br ${avatar.color}
                       flex items-center justify-center text-white text-[10px] font-bold
                       border-2 border-card-theme`}
                     style={{ zIndex: SOCIAL_PROOF_AVATARS.length - i }}

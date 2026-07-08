@@ -147,8 +147,8 @@ export const HeroSlider: React.FC = () => {
           SLIDE TRACK
       ══════════════════════════════ */}
       <div
-        className="relative w-full"
-        style={{ height: "clamp(200px, 52vw, 100vh)" }}
+        className="relative w-full p-2"
+        style={{ height: "clamp(200px, 62vw, 100vh)" }}
       >
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
@@ -159,7 +159,7 @@ export const HeroSlider: React.FC = () => {
             animate="center"
             exit="exit"
             transition={transition}
-            className="absolute inset-0 w-full h-full select-none"
+            className="absolute inset-0 w-full h-full select-none "
           >
             <Image
               src={BANNERS[current].src}        /* ← StaticImageData directly */
@@ -186,7 +186,7 @@ export const HeroSlider: React.FC = () => {
             PROGRESS BAR — top
         ══════════════════════════════ */}
         <div
-          className="absolute top-0 left-0 right-0 h-[3px] z-20"
+          className="absolute top-0 left-0 right-0 h-0.75 z-20"
           style={{ background: "rgba(255,255,255,0.10)" }}
         >
           <motion.div
@@ -299,7 +299,7 @@ export const HeroSlider: React.FC = () => {
                   opacity: i === current ? 1  : 0.40,
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                className="block h-[7px] rounded-full"
+                className="block h-1.75 rounded-full"
                 style={{
                   background:
                     i === current
