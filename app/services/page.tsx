@@ -22,13 +22,13 @@ export default function ServicesPage() {
     <>
       <HeroServices/>
       <ServicesOverview/>
-      <WebDevelopment/>
+      {/* <WebDevelopment/>
       <MobileAppDev/>
       <BlockchainWeb3/>
       <UIUXDesign/>
       <GraphicBranding/>
       <VideoMotion/>
-      <DigitalMarketing/>
+      <DigitalMarketing/> */}
     
     </>
   );

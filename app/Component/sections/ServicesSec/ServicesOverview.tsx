@@ -14,6 +14,10 @@ import {
   Sparkles,
   CheckCircle2,
   Filter,
+  Users,
+  Clock,
+  Shield,
+  Zap,
 } from "lucide-react";
 
 // ============================================
@@ -21,7 +25,7 @@ import {
 // ============================================
 
 const CATEGORIES = [
-  { id: "all", label: "All Services", icon: Filter },
+  { id: "all", label: "All", icon: Filter },
   { id: "development", label: "Development", icon: Globe },
   { id: "design", label: "Design", icon: Palette },
   { id: "marketing", label: "Marketing", icon: TrendingUp },
@@ -35,21 +39,13 @@ const SERVICES = [
     title: "Web Development",
     subtitle: "Frontend + Backend",
     description:
-      "High-performance, SEO-optimized websites and web applications built with modern frameworks — from landing pages to complex enterprise platforms.",
+      "High-performance websites and web apps — from landing pages to complex enterprise platforms.",
     icon: Globe,
-    gradient: "from-blue-500 to-cyan-500",
+    linear: "from-blue-500 to-cyan-500",
     color: "text-blue-500",
-    dot: "bg-blue-500",
-    features: [
-      "Landing Pages & Websites",
-      "Web Applications",
-      "E-Commerce Stores",
-      "Admin Dashboards",
-      "REST & GraphQL APIs",
-      "Database Design",
-    ],
+    features: ["Landing Pages", "Web Apps", "E-Commerce", "REST & GraphQL APIs"],
     techStack: ["Next.js", "React", "Node.js", "PostgreSQL"],
-    tag: "Most Popular",
+    tag: "Popular",
     anchorId: "web-development",
   },
   {
@@ -58,19 +54,11 @@ const SERVICES = [
     title: "Mobile App Development",
     subtitle: "Android & iOS",
     description:
-      "Cross-platform and native mobile apps delivering smooth, intuitive experiences — from idea to App Store end-to-end.",
+      "Cross-platform and native mobile apps — from idea to App Store end-to-end.",
     icon: Smartphone,
-    gradient: "from-purple-500 to-pink-500",
+    linear: "from-purple-500 to-pink-500",
     color: "text-purple-500",
-    dot: "bg-purple-500",
-    features: [
-      "Consumer & Business Apps",
-      "E-Commerce Mobile Apps",
-      "On-Demand Apps",
-      "Push Notifications",
-      "Offline Support",
-      "App Store Deployment",
-    ],
+    features: ["Consumer Apps", "On-Demand Apps", "Push Notifications", "App Store Deploy"],
     techStack: ["Flutter", "React Native", "Firebase", "Swift"],
     tag: "High Demand",
     anchorId: "mobile-app",
@@ -81,19 +69,11 @@ const SERVICES = [
     title: "Blockchain & Web3",
     subtitle: "DeFi, NFTs & Smart Contracts",
     description:
-      "Smart contracts, NFT platforms, DeFi protocols, and decentralized applications — bringing the future of the internet to life.",
+      "Smart contracts, NFT platforms, and dApps bringing the future of the internet to life.",
     icon: Link2,
-    gradient: "from-orange-500 to-amber-500",
+    linear: "from-orange-500 to-amber-500",
     color: "text-orange-500",
-    dot: "bg-orange-500",
-    features: [
-      "Smart Contract Development",
-      "NFT Platforms",
-      "DeFi Protocols",
-      "dApp Development",
-      "Token Creation (ERC-20)",
-      "Wallet Integration",
-    ],
+    features: ["Smart Contracts", "NFT Platforms", "DeFi Protocols", "Wallet Integration"],
     techStack: ["Solidity", "Ethers.js", "Hardhat", "Web3.js"],
     tag: "Trending",
     anchorId: "blockchain",
@@ -104,19 +84,11 @@ const SERVICES = [
     title: "UI/UX Design",
     subtitle: "User-Centered Design",
     description:
-      "Beautiful, functional interfaces designed with the user in mind — wireframes, prototypes, and production-ready Figma designs.",
+      "Beautiful, functional interfaces — wireframes, prototypes, and production-ready Figma designs.",
     icon: Palette,
-    gradient: "from-primary-500 to-accent-500",
+    linear: "from-primary-500 to-accent-500",
     color: "text-primary-500",
-    dot: "bg-primary-500",
-    features: [
-      "Wireframes & User Flows",
-      "High-Fidelity UI Design",
-      "Interactive Prototypes",
-      "Design Systems",
-      "Usability Testing",
-      "Developer Handoff",
-    ],
+    features: ["Wireframes", "High-Fidelity UI", "Prototypes", "Design Systems"],
     techStack: ["Figma", "Adobe XD", "Maze", "Zeplin"],
     tag: "Creative",
     anchorId: "uiux-design",
@@ -125,21 +97,13 @@ const SERVICES = [
     id: 5,
     category: "design",
     title: "Graphic Design & Branding",
-    subtitle: "Brand Identity & Visual Design",
+    subtitle: "Brand Identity & Visuals",
     description:
-      "Complete brand identities — logos, color systems, typography, and marketing materials that make your business instantly recognizable.",
+      "Complete brand identities — logos, color systems, and materials that make you recognizable.",
     icon: PenTool,
-    gradient: "from-rose-500 to-pink-500",
+    linear: "from-rose-500 to-pink-500",
     color: "text-rose-500",
-    dot: "bg-rose-500",
-    features: [
-      "Logo Design",
-      "Brand Identity Kit",
-      "Social Media Assets",
-      "Pitch Deck Design",
-      "Print Materials",
-      "Packaging Design",
-    ],
+    features: ["Logo Design", "Brand Identity Kit", "Social Assets", "Pitch Decks"],
     techStack: ["Illustrator", "Photoshop", "InDesign", "Figma"],
     tag: "Brand First",
     anchorId: "graphic-branding",
@@ -150,21 +114,13 @@ const SERVICES = [
     title: "Video Editing & Motion",
     subtitle: "Content & Motion Graphics",
     description:
-      "Engaging video content that captures attention — reels, motion graphics, product demos, and animated explainers that make brands move.",
+      "Engaging videos that capture attention — reels, motion graphics, and explainer animations.",
     icon: Video,
-    gradient: "from-cyan-500 to-teal-500",
+    linear: "from-cyan-500 to-teal-500",
     color: "text-cyan-500",
-    dot: "bg-cyan-500",
-    features: [
-      "Social Media Reels",
-      "Motion Graphics",
-      "Product Demo Videos",
-      "YouTube Content",
-      "Animated Explainers",
-      "Brand Films",
-    ],
+    features: ["Social Reels", "Motion Graphics", "Product Demos", "Explainer Videos"],
     techStack: ["After Effects", "Premiere Pro", "DaVinci", "Cinema 4D"],
-    tag: "Viral Content",
+    tag: "Viral",
     anchorId: "video-motion",
   },
   {
@@ -173,32 +129,31 @@ const SERVICES = [
     title: "Digital Marketing",
     subtitle: "Growth & Strategy",
     description:
-      "Data-driven marketing that grows your business — SEO, paid ads, social media, and content strategy reaching the right audience.",
+      "Data-driven marketing — SEO, paid ads, social media reaching the right audience.",
     icon: TrendingUp,
-    gradient: "from-green-500 to-emerald-500",
+    linear: "from-green-500 to-emerald-500",
     color: "text-green-500",
-    dot: "bg-green-500",
-    features: [
-      "SEO & Content Strategy",
-      "Meta & Google Ads",
-      "Social Media Management",
-      "Email Marketing",
-      "Analytics & Reporting",
-      "Conversion Optimization",
-    ],
+    features: ["SEO & Content", "Meta & Google Ads", "Social Media", "Analytics"],
     techStack: ["GA4", "Meta Ads", "Google Ads", "SEMrush"],
-    tag: "ROI Focused",
+    tag: "ROI",
     anchorId: "digital-marketing",
   },
 ];
 
-const INCLUDED_ALWAYS = [
+const WHY_US = [
+  { icon: Users, label: "Dedicated Team", desc: "Not freelancers — a full studio", color: "text-primary-500", bg: "bg-primary-500/10" },
+  { icon: Clock, label: "On-Time Delivery", desc: "Always delivered on schedule", color: "text-green-500", bg: "bg-green-500/10" },
+  { icon: Shield, label: "NDA Protected", desc: "Your ideas stay yours", color: "text-blue-500", bg: "bg-blue-500/10" },
+  { icon: Zap, label: "Fast Turnaround", desc: "Quick without compromising quality", color: "text-yellow-500", bg: "bg-yellow-500/10" },
+];
+
+const INCLUDED = [
   "Free Consultation",
   "NDA Agreement",
   "Weekly Updates",
   "Source Code Ownership",
   "30-Day Support",
-  "Revision Rounds",
+  "Unlimited Revisions",
 ];
 
 // ============================================
@@ -230,9 +185,7 @@ const CategoryFilter: React.FC<{
           {cat.label}
           <span
             className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-              isActive
-                ? "bg-white/20 text-white"
-                : "bg-secondary-theme text-tertiary-theme"
+              isActive ? "bg-white/20 text-white" : "bg-secondary-theme text-tertiary-theme"
             }`}
           >
             {counts[cat.id] || 0}
@@ -251,51 +204,39 @@ const ServiceCard: React.FC<{
   service: (typeof SERVICES)[0];
   index: number;
 }> = ({ service, index }) => {
-  const [expanded, setExpanded] = useState(false);
   const Icon = service.icon;
-
   return (
     <div
       id={service.anchorId}
-      className="group relative flex flex-col rounded-2xl border border-card-theme bg-card-theme
+      className="group flex flex-col rounded-2xl border border-card-theme bg-card-theme
         hover:border-primary-500/20 hover:-translate-y-1 hover:shadow-lg
         transition-all duration-300 overflow-hidden"
-      style={{ animationDelay: `${index * 0.08}s` }}
     >
-      {/* Top Gradient Strip */}
-      <div className={`h-1 w-full bg-gradient-to-r ${service.gradient}`} />
+      {/* Top Strip */}
+      <div className={`h-1 w-full bg-linear-to-r ${service.linear}`} />
 
-      <div className="flex flex-col flex-1 p-5 sm:p-6">
-
-        {/* Header Row */}
+      <div className="flex flex-col flex-1 p-5">
+        {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div
-            className={`flex items-center justify-center w-12 h-12 rounded-xl
-              bg-gradient-to-br ${service.gradient} shadow-md shrink-0
+            className={`flex items-center justify-center w-11 h-11 rounded-xl
+              bg-linear-to-br ${service.linear} shadow-md shrink-0
               group-hover:scale-110 transition-transform duration-300`}
           >
-            <Icon size={22} className="text-white" />
+            <Icon size={20} className="text-white" />
           </div>
-          <span
-            className="text-[10px] font-bold px-2.5 py-1 rounded-full
-              bg-secondary-theme border border-card-theme text-tertiary-theme"
-          >
+          <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-secondary-theme border border-card-theme text-tertiary-theme">
             {service.tag}
           </span>
         </div>
 
-        {/* Title + Subtitle */}
-        <div className="mb-2.5">
-          <h3
-            className="text-base sm:text-lg font-bold text-primary-theme
-              group-hover:text-primary-500 transition-colors leading-tight mb-1"
-          >
-            {service.title}
-          </h3>
-          <p className={`text-[10px] font-bold uppercase tracking-widest ${service.color}`}>
-            {service.subtitle}
-          </p>
-        </div>
+        {/* Title */}
+        <h3 className="text-base font-bold text-primary-theme group-hover:text-primary-500 transition-colors leading-tight mb-0.5">
+          {service.title}
+        </h3>
+        <p className={`text-[10px] font-bold uppercase tracking-widest mb-3 ${service.color}`}>
+          {service.subtitle}
+        </p>
 
         {/* Description */}
         <p className="text-sm text-secondary-theme leading-relaxed mb-4 flex-1">
@@ -303,61 +244,33 @@ const ServiceCard: React.FC<{
         </p>
 
         {/* Features */}
-        <div className="mb-4">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-tertiary-theme mb-2.5">
-            What's Included
-          </p>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
-            {service.features
-              .slice(0, expanded ? service.features.length : 4)
-              .map((feature) => (
-                <div key={feature} className="flex items-start gap-1.5">
-                  <CheckCircle2
-                    size={12}
-                    className={`${service.color} shrink-0 mt-0.5`}
-                  />
-                  <span className="text-xs font-medium text-primary-theme leading-tight">
-                    {feature}
-                  </span>
-                </div>
-              ))}
-          </div>
-          {service.features.length > 4 && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className={`mt-2 text-xs font-bold ${service.color} hover:underline transition-all duration-200`}
-            >
-              {expanded
-                ? "Show Less ↑"
-                : `+${service.features.length - 4} More ↓`}
-            </button>
-          )}
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-4">
+          {service.features.map((f) => (
+            <div key={f} className="flex items-center gap-1.5">
+              <CheckCircle2 size={11} className={`${service.color} shrink-0`} />
+              <span className="text-xs text-primary-theme leading-tight">{f}</span>
+            </div>
+          ))}
         </div>
 
         {/* Tech Stack */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {service.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="text-[10px] font-semibold px-2 py-1 rounded-md
-                bg-secondary-theme border border-card-theme text-tertiary-theme"
-            >
-              {tech}
+          {service.techStack.map((t) => (
+            <span key={t} className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-secondary-theme border border-card-theme text-tertiary-theme">
+              {t}
             </span>
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-card-theme mb-4" />
-
         {/* CTA */}
+        <div className="h-px bg-card-theme mb-4" />
         <Link href={`/contact?service=${service.anchorId}`}>
           <button
             className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl
-              text-sm font-bold text-white bg-gradient-to-r ${service.gradient}
-              hover:opacity-90 active:scale-95 transition-all duration-200 shadow-md`}
+              text-sm font-bold text-white bg-linear-to-r ${service.linear}
+              hover:opacity-90 active:scale-95 transition-all duration-200`}
           >
-            Get Quote
+            Get Started
             <ArrowRight size={14} />
           </button>
         </Link>
@@ -367,101 +280,112 @@ const ServiceCard: React.FC<{
 };
 
 // ============================================
-// QUICK NAV (Desktop Sidebar)
+// SECTION 2 — WHY CHOOSE US
 // ============================================
 
-const QuickNav: React.FC = () => (
-  <div className="hidden xl:flex flex-col gap-1 sticky top-28 w-48 shrink-0">
-    <p className="text-[10px] font-bold uppercase tracking-widest text-tertiary-theme mb-2">
-      Jump To
-    </p>
-    {SERVICES.map((service) => {
-      const Icon = service.icon;
-      return (
-        <a
-          key={service.id}
-          href={`#${service.anchorId}`}
-          className="group flex items-center gap-2.5 px-3 py-2 rounded-lg
-            text-xs font-semibold text-secondary-theme
-            hover:text-primary-theme hover:bg-secondary-theme
-            transition-all duration-200"
-        >
+const WhyUsSection: React.FC = () => (
+  <div className="mt-16 pt-16 border-t border-card-theme">
+    <div className="text-center mb-8">
+      <h3 className="text-xl sm:text-2xl font-bold text-primary-theme mb-2">
+        Why Work With Us?
+      </h3>
+      <p className="text-sm text-secondary-theme">
+        What sets Webixle apart from the rest.
+      </p>
+    </div>
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {WHY_US.map((item) => {
+        const Icon = item.icon;
+        return (
           <div
-            className={`flex items-center justify-center w-6 h-6 rounded-md
-              bg-gradient-to-br ${service.gradient} shrink-0
-              group-hover:scale-110 transition-transform`}
+            key={item.label}
+            className="group flex flex-col items-center text-center p-5 rounded-2xl
+              bg-card-theme border border-card-theme
+              hover:border-primary-500/20 hover:-translate-y-1
+              transition-all duration-300"
           >
-            <Icon size={11} className="text-white" />
+            <div className={`flex items-center justify-center w-11 h-11 rounded-xl ${item.bg} mb-3 group-hover:scale-110 transition-transform duration-300`}>
+              <Icon size={20} className={item.color} />
+            </div>
+            <p className="text-sm font-bold text-primary-theme mb-1">{item.label}</p>
+            <p className="text-xs text-secondary-theme leading-relaxed">{item.desc}</p>
           </div>
-          {service.title}
-        </a>
-      );
-    })}
+        );
+      })}
+    </div>
   </div>
 );
 
 // ============================================
-// COMPARE / CTA STRIP
+// SECTION 3 — ALWAYS INCLUDED
 // ============================================
 
-const CompareStrip: React.FC = () => (
-  <div className="mt-12 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-primary-500/8 to-accent-500/5 border border-primary-500/20">
-    {/* Top Row */}
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 mb-6">
-      <div className="flex items-center gap-4">
-        <div
-          className="flex items-center justify-center w-11 h-11 rounded-xl
-            bg-gradient-to-br from-primary-500 to-accent-500 shadow-md shrink-0"
-        >
-          <Sparkles size={20} className="text-white" />
-        </div>
-        <div>
-          <h3 className="text-base font-bold text-primary-theme mb-0.5">
-            Not Sure Which Service You Need?
-          </h3>
-          <p className="text-sm text-secondary-theme">
-            Book a free 30-min call — we'll guide you to the right solution.
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2.5 shrink-0 w-full sm:w-auto">
-        <Link href="/contact">
-          <button
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5
-              rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm
-              transition-all duration-200 active:scale-95 whitespace-nowrap
-              shadow-md shadow-primary-500/25"
-          >
-            Book Free Call
-            <ArrowRight size={14} />
-          </button>
-        </Link>
-        <Link href="https://wa.me/yourphonenumber" target="_blank">
-          <button
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5
-              rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold text-sm
-              transition-all duration-200 active:scale-95 whitespace-nowrap"
-          >
-            💬 WhatsApp Us
-          </button>
-        </Link>
-      </div>
+const AlwaysIncludedSection: React.FC = () => (
+  <div className="mt-16 pt-16 border-t border-card-theme">
+    <div className="text-center mb-8">
+      <h3 className="text-xl sm:text-2xl font-bold text-primary-theme mb-2">
+        Included With Every Service
+      </h3>
+      <p className="text-sm text-secondary-theme">
+        No hidden fees — these come standard with every project.
+      </p>
     </div>
-
-    {/* Divider */}
-    <div className="h-px bg-primary-500/15 mb-5" />
-
-    {/* Included Always */}
-    <p className="text-[10px] font-bold uppercase tracking-widest text-tertiary-theme mb-3 text-center">
-      Included With Every Service
-    </p>
-    <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
-      {INCLUDED_ALWAYS.map((item) => (
-        <div key={item} className="flex items-center gap-1.5">
-          <CheckCircle2 size={12} className="text-green-500 shrink-0" />
-          <span className="text-xs font-semibold text-secondary-theme">{item}</span>
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+      {INCLUDED.map((item) => (
+        <div
+          key={item}
+          className="flex items-center gap-3 p-3.5 rounded-xl
+            bg-card-theme border border-card-theme
+            hover:border-primary-500/20 transition-colors duration-200"
+        >
+          <div className="w-7 h-7 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+            <CheckCircle2 size={14} className="text-green-500" />
+          </div>
+          <span className="text-sm font-semibold text-primary-theme">{item}</span>
         </div>
       ))}
+    </div>
+  </div>
+);
+
+// ============================================
+// SECTION 4 — BOTTOM CTA
+// ============================================
+
+const BottomCTA: React.FC = () => (
+  <div className="mt-16 pt-16 border-t border-card-theme">
+    <div className="relative rounded-2xl overflow-hidden border border-card-theme">
+      <div className="absolute inset-0 bg-linear-to-br from-primary-600/90 to-accent-600/90" />
+      <div
+        className="absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage: "radial-linear(circle at 1px 1px, white 1px, transparent 0)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-5 p-7 sm:p-9">
+        <div>
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
+            Not Sure Where to Start?
+          </h3>
+          <p className="text-white/75 text-sm">
+            Book a free 30-min consultation — no commitment required.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 shrink-0 w-full sm:w-auto">
+          <Link href="/contact">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-primary-700 font-bold text-sm hover:bg-primary-50 transition-all duration-200 active:scale-95 whitespace-nowrap">
+              Book Free Call
+              <ArrowRight size={14} />
+            </button>
+          </Link>
+          <Link href="https://wa.me/yourphonenumber" target="_blank">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/30 text-white font-bold text-sm hover:bg-white/10 transition-all duration-200 active:scale-95 whitespace-nowrap">
+              💬 WhatsApp Us
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   </div>
 );
@@ -494,32 +418,24 @@ export const ServicesOverview: React.FC = () => {
 
       <div className="container-custom relative z-10">
 
-        {/* ── Header ── */}
+        {/* ══════════════════════
+            SECTION 1 — SERVICES
+        ══════════════════════ */}
         <div className="max-w-2xl mx-auto text-center mb-10 animate-in">
-          <span
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-              text-xs font-bold uppercase tracking-widest mb-4
-              bg-card-theme border border-card-theme text-secondary-theme"
-          >
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 bg-card-theme border border-card-theme text-secondary-theme">
             <Sparkles size={12} className="text-primary-500" />
             Everything We Offer
           </span>
-
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight
-              text-primary-theme leading-[1.1] mb-3"
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-primary-theme leading-[1.1] mb-3">
             One Team.{" "}
-            <span className="gradient-text">Every Solution.</span>
+            <span className="linear-text">Every Solution.</span>
           </h2>
-
           <p className="text-sm sm:text-base text-secondary-theme max-w-xl mx-auto">
-            7 services, 1 dedicated team, zero coordination headache —
-            everything your business needs under one roof.
+            7 services, 1 dedicated team — everything your business needs under one roof.
           </p>
         </div>
 
-        {/* ── Category Filter ── */}
+        {/* Filter */}
         <div className="mb-8 animate-in-delay-1">
           <CategoryFilter
             active={activeCategory}
@@ -528,33 +444,35 @@ export const ServicesOverview: React.FC = () => {
           />
         </div>
 
-        {/* ── Main Layout ── */}
-        <div className="flex gap-8 items-start">
-
-          {/* Quick Nav Sidebar */}
-          <QuickNav />
-
-          {/* Services Grid */}
-          <div className="flex-1 min-w-0">
-            {filteredServices.length === 0 ? (
-              <div className="text-center py-16 text-tertiary-theme text-sm">
-                No services found in this category.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-                {filteredServices.map((service, index) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    index={index}
-                  />
-                ))}
-              </div>
-            )}
-
-            <CompareStrip />
-          </div>
+        {/* Services Grid */}
+        <div className="animate-in-delay-1">
+          {filteredServices.length === 0 ? (
+            <div className="text-center py-16 text-tertiary-theme text-sm">
+              No services found.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {filteredServices.map((service, index) => (
+                <ServiceCard key={service.id} service={service} index={index} />
+              ))}
+            </div>
+          )}
         </div>
+
+        {/* ══════════════════════
+            SECTION 2 — WHY US
+        ══════════════════════ */}
+        <WhyUsSection />
+
+        {/* ══════════════════════
+            SECTION 3 — INCLUDED
+        ══════════════════════ */}
+        <AlwaysIncludedSection />
+
+        {/* ══════════════════════
+            SECTION 4 — CTA
+        ══════════════════════ */}
+        <BottomCTA />
       </div>
     </section>
   );
