@@ -12,7 +12,9 @@ import {
   Calendar,
   Headphones,
   ArrowRight,
+  ExternalLink,
 } from "lucide-react";
+import { trackEvent } from "@/app/lib/analytics";
 
 // ============================================
 // TYPES & CONSTANTS
@@ -55,6 +57,25 @@ const COMPANY = {
   address: "Mumbai, India",
 };
 
+// ✅ Google Form Entry IDs — Form banao phir inspect karke IDs lo
+// Google Form URL format:
+// https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
+const GOOGLE_FORM_CONFIG = {
+  // ⚠️ Apna Google Form URL yahan daalo
+  formUrl:
+    "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse",
+  fields: {
+    // ⚠️ Ye entry IDs Google Form se milegi (niche steps mein bataya hai)
+    firstName: "entry.000000001",
+    lastName:  "entry.000000002",
+    email:     "entry.000000003",
+    company:   "entry.000000004",
+    phone:     "entry.000000005",
+    service:   "entry.000000006",
+    message:   "entry.000000007",
+  },
+};
+
 const CONTACT_METHODS = [
   {
     icon: MessageSquare,
@@ -89,17 +110,25 @@ const CONTACT_METHODS = [
 ];
 
 const CONTACT_INFO = [
-  { icon: Mail, label: "Email", value: COMPANY.email, href: `mailto:${COMPANY.email}` },
-  { icon: Phone, label: "Phone", value: COMPANY.phone, href: `tel:${COMPANY.phone}` },
+  {
+    icon: Mail,
+    label: "Email",
+    value: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: COMPANY.phone,
+    href: `tel:${COMPANY.phone}`,
+  },
   { icon: MapPin, label: "Location", value: COMPANY.address, href: null },
-  { icon: Clock, label: "Working Hours", value: "Mon–Sat, 9AM–7PM IST", href: null },
-];
-
-const FAQ_LINKS = [
-  "How long does a project take?",
-  "Do you sign an NDA?",
-  "What is the payment structure?",
-  "Do you provide post-launch support?",
+  {
+    icon: Clock,
+    label: "Working Hours",
+    value: "Mon–Sat, 9AM–7PM IST",
+    href: null,
+  },
 ];
 
 // ============================================
@@ -178,7 +207,9 @@ export default function ContactPage() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -187,13 +218,56 @@ export default function ContactPage() {
     }
   };
 
+  // ✅ Google Form mein data submit karne ka function
+  const submitToGoogleForm = async (data: FormField) => {
+    const { formUrl, fields } = GOOGLE_FORM_CONFIG;
+
+    // FormData body banao
+    const formData = new FormData();
+    formData.append(fields.firstName, data.firstName);
+    formData.append(fields.lastName, data.lastName);
+    formData.append(fields.email, data.email);
+    formData.append(fields.company, data.company);
+    formData.append(fields.phone, data.phone);
+    formData.append(fields.service, data.service);
+    formData.append(fields.message, data.message);
+
+    try {
+      // ✅ no-cors mode use karo (Google Form CORS allow nahi karta)
+      await fetch(formUrl, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      });
+    } catch (error) {
+      // no-cors mein error aata hai but form submit ho jata hai
+      console.log("Form submitted (no-cors expected):", error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1800));
-    setLoading(false);
-    setSubmitted(true);
+
+    // ✅ Analytics — form submit attempt track karo
+    trackEvent("form_submit_attempt", "Contact Form", form.service || "No Service Selected");
+
+    try {
+      // ✅ Google Form mein submit karo
+      await submitToGoogleForm(form);
+
+      // ✅ Analytics — success track karo
+      trackEvent("form_submit_success", "Contact Form", form.service || "No Service Selected");
+
+      setLoading(false);
+      setSubmitted(true);
+    } catch {
+      // ✅ Analytics — error track karo
+      trackEvent("form_submit_error", "Contact Form", "Submission Failed");
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -201,7 +275,10 @@ export default function ContactPage() {
       <SuccessScreen
         name={form.firstName}
         email={form.email}
-        onReset={() => { setSubmitted(false); setForm(INITIAL_FORM); }}
+        onReset={() => {
+          setSubmitted(false);
+          setForm(INITIAL_FORM);
+        }}
       />
     );
   }
@@ -233,8 +310,7 @@ export default function ContactPage() {
             className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight
               text-primary-theme mb-4 leading-[1.1]"
           >
-            Let's Start a{" "}
-            <span className="linear-text">Conversation</span>
+            Let's Start a <span className="linear-text">Conversation</span>
           </h1>
 
           <p className="text-base sm:text-lg text-secondary-theme max-w-xl mx-auto">
@@ -256,8 +332,14 @@ export default function ContactPage() {
                 <a
                   key={method.title}
                   href={method.href}
-                  target={method.href.startsWith("http") ? "_blank" : undefined}
+                  target={
+                    method.href.startsWith("http") ? "_blank" : undefined
+                  }
                   rel="noopener noreferrer"
+                  // ✅ Analytics — contact method click track karo
+                  onClick={() =>
+                    trackEvent("contact_method_click", "Contact Methods", method.title)
+                  }
                   className="group flex flex-col items-center text-center p-5 rounded-2xl
                     border border-card-theme bg-card-theme
                     hover:border-primary-500/20 hover:-translate-y-1 hover:shadow-md
@@ -312,7 +394,6 @@ export default function ContactPage() {
                 </p>
 
                 <form onSubmit={handleSubmit} noValidate className="space-y-4">
-
                   {/* Name Row */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
@@ -329,10 +410,15 @@ export default function ContactPage() {
                           bg-secondary-theme border text-primary-theme
                           placeholder:text-tertiary-theme focus:outline-none
                           focus:ring-2 focus:ring-primary-500/20 transition-all duration-200
-                          ${errors.firstName ? "border-red-500" : "border-card-theme focus:border-primary-500"}`}
+                          ${errors.firstName
+                            ? "border-red-500"
+                            : "border-card-theme focus:border-primary-500"
+                          }`}
                       />
                       {errors.firstName && (
-                        <p className="mt-1 text-xs text-red-500">{errors.firstName}</p>
+                        <p className="mt-1 text-xs text-red-500">
+                          {errors.firstName}
+                        </p>
                       )}
                     </div>
                     <div>
@@ -349,10 +435,15 @@ export default function ContactPage() {
                           bg-secondary-theme border text-primary-theme
                           placeholder:text-tertiary-theme focus:outline-none
                           focus:ring-2 focus:ring-primary-500/20 transition-all duration-200
-                          ${errors.lastName ? "border-red-500" : "border-card-theme focus:border-primary-500"}`}
+                          ${errors.lastName
+                            ? "border-red-500"
+                            : "border-card-theme focus:border-primary-500"
+                          }`}
                       />
                       {errors.lastName && (
-                        <p className="mt-1 text-xs text-red-500">{errors.lastName}</p>
+                        <p className="mt-1 text-xs text-red-500">
+                          {errors.lastName}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -363,7 +454,10 @@ export default function ContactPage() {
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary-theme" />
+                      <Mail
+                        size={15}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary-theme"
+                      />
                       <input
                         name="email"
                         type="email"
@@ -374,7 +468,10 @@ export default function ContactPage() {
                           bg-secondary-theme border text-primary-theme
                           placeholder:text-tertiary-theme focus:outline-none
                           focus:ring-2 focus:ring-primary-500/20 transition-all duration-200
-                          ${errors.email ? "border-red-500" : "border-card-theme focus:border-primary-500"}`}
+                          ${errors.email
+                            ? "border-red-500"
+                            : "border-card-theme focus:border-primary-500"
+                          }`}
                       />
                     </div>
                     {errors.email && (
@@ -406,7 +503,10 @@ export default function ContactPage() {
                         Phone
                       </label>
                       <div className="relative">
-                        <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary-theme" />
+                        <Phone
+                          size={15}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary-theme"
+                        />
                         <input
                           name="phone"
                           type="tel"
@@ -439,7 +539,9 @@ export default function ContactPage() {
                     >
                       <option value="">Select a service</option>
                       {SERVICE_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -460,13 +562,17 @@ export default function ContactPage() {
                         placeholder:text-tertiary-theme focus:outline-none
                         focus:ring-2 focus:ring-primary-500/20 resize-none
                         transition-all duration-200
-                        ${errors.message ? "border-red-500" : "border-card-theme focus:border-primary-500"}`}
+                        ${errors.message
+                          ? "border-red-500"
+                          : "border-card-theme focus:border-primary-500"
+                        }`}
                     />
                     <div className="flex justify-between mt-1">
-                      {errors.message
-                        ? <p className="text-xs text-red-500">{errors.message}</p>
-                        : <span />
-                      }
+                      {errors.message ? (
+                        <p className="text-xs text-red-500">{errors.message}</p>
+                      ) : (
+                        <span />
+                      )}
                       <span className="text-xs text-tertiary-theme">
                         {form.message.length} / 1000
                       </span>
@@ -476,7 +582,10 @@ export default function ContactPage() {
                   {/* Privacy */}
                   <p className="text-xs text-tertiary-theme">
                     By submitting, you agree to our{" "}
-                    <a href="#" className="text-primary-500 hover:underline">Privacy Policy</a>.
+                    <a href="#" className="text-primary-500 hover:underline">
+                      Privacy Policy
+                    </a>
+                    .
                   </p>
 
                   {/* Submit */}
@@ -493,9 +602,24 @@ export default function ContactPage() {
                   >
                     {loading ? (
                       <>
-                        <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        <svg
+                          className="animate-spin h-4 w-4 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8H4z"
+                          />
                         </svg>
                         Sending...
                       </>
@@ -531,6 +655,10 @@ export default function ContactPage() {
                         {href ? (
                           <a
                             href={href}
+                            // ✅ Analytics — contact info click track karo
+                            onClick={() =>
+                              trackEvent("contact_info_click", "Contact Info", label)
+                            }
                             className="text-sm font-medium text-secondary-theme hover:text-primary-500 transition-colors"
                           >
                             {value}
@@ -561,25 +689,25 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              {/* FAQ Links */}
-              <div className="p-5 rounded-2xl border border-card-theme bg-card-theme">
-                <h3 className="text-sm font-bold text-primary-theme mb-3">
-                  Common Questions
-                </h3>
-                <div className="space-y-1.5">
-                  {FAQ_LINKS.map((q) => (
-                    <a
-                      key={q}
-                      href="/faq"
-                      className="flex items-center gap-2 text-xs text-secondary-theme
-                        hover:text-primary-500 transition-colors py-1 group"
-                    >
-                      <ArrowRight size={11} className="text-tertiary-theme group-hover:text-primary-500 transition-colors shrink-0" />
-                      {q}
-                    </a>
-                  ))}
+              {/* ✅ Google Form Responses Link (Admin ke liye — Production mein hatao) */}
+              {process.env.NODE_ENV === "development" && (
+                <div className="p-4 rounded-2xl border border-yellow-500/20 bg-yellow-500/5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <ExternalLink size={14} className="text-yellow-500" />
+                    <span className="text-xs font-bold text-yellow-500">
+                      Dev Only — Google Sheet
+                    </span>
+                  </div>
+                  <a
+                    href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-secondary-theme hover:text-primary-500 underline"
+                  >
+                    View Form Responses →
+                  </a>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
