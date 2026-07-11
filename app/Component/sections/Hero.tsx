@@ -1,24 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Code2,
-  Smartphone,
-  Globe,
-  Shield,
-  Zap,
-  Clock,
-  HeartHandshake,
-} from "lucide-react";
+import { ArrowRight, CheckCircle, Star } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import DarkBg from "../../../public/Image/banners/herobg.png";
 import LightBg from "../../../public/Image/banners/lightbg.png";
-import { useTheme } from "next-themes";
+import HeroSecImage from "../../../public/Image/banners/herosecimage.png";
 
 // ============================================
 // CONSTANTS
@@ -37,67 +27,41 @@ const SOCIAL_PROOF_AVATARS = [
   { initials: "PR", color: "from-green-400 to-green-600" },
 ];
 
-const SERVICES = [
-  {
-    icon: Globe,
-    title: "Web Development",
-    desc: "Fast, modern websites & web apps",
-    iconBg: "bg-primary-500/10",
-    iconColor: "text-primary-500",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile Apps",
-    desc: "iOS & Android apps that users love",
-    iconBg: "bg-accent-500/10",
-    iconColor: "text-accent-500",
-  },
-  {
-    icon: Code2,
-    title: "Custom Software",
-    desc: "Tailored solutions for your business",
-    iconBg: "bg-blue-500/10",
-    iconColor: "text-blue-500",
-  },
-];
-
-const TRUST_POINTS = [
-  { icon: Clock, label: "On-Time Delivery", color: "text-primary-500" },
-  { icon: Shield, label: "NDA Protected", color: "text-green-500" },
-  { icon: HeartHandshake, label: "Dedicated Support", color: "text-accent-500" },
-  { icon: Zap, label: "Fast Turnaround", color: "text-yellow-500" },
-];
-
 // ============================================
 // BACKGROUND
 // ============================================
 
 const HeroBackground: React.FC = () => {
   const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
     <>
       <div className="absolute inset-0 z-0">
-        <Image
-          src={isDark ? DarkBg : LightBg}
-          alt="Hero Background"
-          fill
-          className="object-cover object-center"
-          priority
-        />
+        {mounted ? (
+          <Image
+            src={resolvedTheme === "dark" ? DarkBg : LightBg}
+            alt="Hero Background"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        ) : (
+          <div className="absolute inset-0 bg-(--bg-primary)" />
+        )}
 
-        {/* Light overlay for better text readability */}
-        <div 
-          className={`absolute inset-0 ${
-            isDark 
-              ? "bg-black/70" 
+        {/* Overlay */}
+        <div
+          className={`absolute inset-0 transition-colors duration-300 ${
+            mounted && resolvedTheme === "dark"
+              ? "bg-black/70"
               : "bg-white/60"
-          }`} 
+          }`}
         />
       </div>
 
-      {/* Existing Glow Effects */}
+      {/* Glow Effects */}
       <div className="hero-glow" />
       <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-primary-500/8 blur-[100px] animate-pulse-slow pointer-events-none" />
       <div className="absolute bottom-20 left-0 w-80 h-80 rounded-full bg-accent-500/8 blur-[80px] animate-pulse-slow pointer-events-none" />
@@ -106,129 +70,109 @@ const HeroBackground: React.FC = () => {
 };
 
 // ============================================
-// SERVICE VISUAL (Right Column)
+// RIGHT SECTION — Image
 // ============================================
 
-const ServiceVisual: React.FC = () => (
-  <div className="relative w-full max-w-md">
-    {/* Glow */}
-    <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-500/10 to-accent-500/10 blur-2xl scale-105" />
+const HeroRightImage: React.FC = () => (
+  // ✅ px-8 mobile pe badges clip hone se bachata hai
+  <div className="relative w-full px-8 sm:px-6 lg:px-0">
 
-    {/* Main Card */}
-    <div
-      className="relative rounded-2xl border border-card-theme bg-card-theme
-        shadow-[0_24px_60px_rgba(0,0,0,0.10)] overflow-hidden"
-    >
-      {/* Card Header */}
-      <div className="px-5 py-4 border-b border-card-theme bg-secondary-theme">
-        <div className="flex items-center justify-between">
+    {/* ✅ Image container — mobile pe choti, desktop pe badi */}
+    <div className="relative w-full h-70 sm:h-95 lg:h-125 mx-auto max-w-sm sm:max-w-md lg:max-w-lg">
+
+      {/* Glow */}
+      <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary-500/20 to-accent-500/20 blur-3xl scale-105" />
+
+      {/* Main Image */}
+      <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
+        <Image
+          src={HeroSecImage}
+          alt="Webixle — Web Development & Digital Services"
+          fill
+          className="object-cover object-center rounded-2xl"
+          priority
+        />
+        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+      </div>
+
+      {/* ✅ Floating Badge — Top Right */}
+      <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 animate-float z-10">
+        <div
+          className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2
+            rounded-xl bg-card-theme border border-card-theme shadow-lg backdrop-blur-sm"
+        >
+          <div
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-linear-to-br
+              from-green-400 to-green-600 flex items-center justify-center shrink-0"
+          >
+            <CheckCircle size={11} className="text-white" />
+          </div>
           <div>
-            <h3 className="text-sm font-bold text-primary-theme">Our Services</h3>
-            <p className="text-xs text-tertiary-theme mt-0.5">What we build for you</p>
-          </div>
-          <div
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full
-              bg-green-500/10 border border-green-500/20"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[10px] font-semibold text-green-500">
-              Accepting Projects
-            </span>
+            <div className="text-[10px] sm:text-xs font-bold text-primary-theme">
+              Project Delivered!
+            </div>
+            <div className="text-[9px] sm:text-[10px] text-green-500 font-medium">
+              On-time ✨
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Services List */}
-      <div className="p-4 space-y-2.5">
-        {SERVICES.map((service) => (
-          <div
-            key={service.title}
-            className="flex items-center gap-3 p-3 rounded-xl
-              bg-secondary-theme border border-card-theme
-              hover:border-primary-500/30 transition-all duration-200 group cursor-default"
-          >
-            <div
-              className={`w-9 h-9 rounded-lg ${service.iconBg}
-                flex items-center justify-center shrink-0
-                group-hover:scale-110 transition-transform duration-200`}
-            >
-              <service.icon size={17} className={service.iconColor} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-bold text-primary-theme">{service.title}</div>
-              <div className="text-xs text-tertiary-theme mt-0.5">{service.desc}</div>
-            </div>
-            <ArrowRight
-              size={13}
-              className="text-tertiary-theme group-hover:text-primary-500
-                group-hover:translate-x-0.5 transition-all duration-200 shrink-0"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Trust Points */}
-      <div className="px-4 pb-4">
-        <div className="grid grid-cols-2 gap-2">
-          {TRUST_POINTS.map(({ icon: Icon, label, color }) => (
-            <div
-              key={label}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg
-                bg-secondary-theme border border-card-theme"
-            >
-              <Icon size={13} className={`${color} shrink-0`} />
-              <span className="text-xs font-medium text-secondary-theme truncate">
-                {label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    {/* Floating Badge — Top Right */}
-    <div className="absolute -top-4 -right-4 animate-float">
+      {/* ✅ Floating Badge — Bottom Left */}
       <div
-        className="flex items-center gap-2 px-3 py-2 rounded-xl
-          bg-card-theme border border-card-theme shadow-lg"
+        className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 animate-float z-10"
+        style={{ animationDelay: "1.5s" }}
       >
         <div
-          className="w-7 h-7 rounded-full bg-linear-to-br from-green-400 to-green-600
-            flex items-center justify-center shrink-0"
+          className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2
+            rounded-xl bg-card-theme border border-card-theme shadow-lg backdrop-blur-sm"
         >
-          <CheckCircle size={13} className="text-white" />
-        </div>
-        <div>
-          <div className="text-xs font-bold text-primary-theme">Project Delivered!</div>
-          <div className="text-[10px] text-green-500 font-medium">On-time ✨</div>
+          <div className="flex -space-x-1.5">
+            {[
+              "from-primary-400 to-primary-600",
+              "from-accent-400 to-accent-600",
+              "from-blue-400 to-blue-600",
+            ].map((c, i) => (
+              <div
+                key={i}
+                className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-linear-to-br
+                  ${c} border-2 border-card-theme`}
+              />
+            ))}
+          </div>
+          <div>
+            <div className="text-[10px] sm:text-xs font-bold text-primary-theme">
+              80+ Clients
+            </div>
+            <div className="text-[9px] sm:text-[10px] text-tertiary-theme">
+              10+ Industries
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    {/* Floating Badge — Bottom Left */}
-    <div
-      className="absolute -bottom-4 -left-4 animate-float"
-      style={{ animationDelay: "1.5s" }}
-    >
+      {/* ✅ Floating Badge — Bottom Right */}
       <div
-        className="flex items-center gap-2.5 px-3 py-2 rounded-xl
-          bg-card-theme border border-card-theme shadow-lg"
+        className="absolute bottom-6 -right-3 sm:bottom-8 sm:-right-4 animate-float z-10"
+        style={{ animationDelay: "0.8s" }}
       >
-        <div className="flex -space-x-1.5">
-          {[
-            "from-primary-400 to-primary-600",
-            "from-accent-400 to-accent-600",
-            "from-blue-400 to-blue-600",
-          ].map((c, i) => (
-            <div
-              key={i}
-              className={`w-5 h-5 rounded-full bg-linear-to-br ${c} border-2 border-card-theme`}
-            />
-          ))}
-        </div>
-        <div>
-          <div className="text-xs font-bold text-primary-theme">80+ Clients</div>
-          <div className="text-[10px] text-tertiary-theme">Across 10+ Industries</div>
+        <div
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2
+            rounded-xl bg-card-theme border border-card-theme shadow-lg backdrop-blur-sm"
+        >
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={9}
+                className="text-yellow-400"
+                fill="currentColor"
+              />
+            ))}
+          </div>
+          <span className="text-[10px] sm:text-xs font-bold text-primary-theme">
+            5.0 Rating
+          </span>
         </div>
       </div>
     </div>
@@ -241,17 +185,26 @@ const ServiceVisual: React.FC = () => (
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-mesh pt-16">
+    // ✅ min-h-screen hata diya — auto height
+    // ✅ pt-16 = navbar height ke barabar
+    <section className="relative overflow-hidden bg-mesh pt-16">
       <HeroBackground />
 
-      <div className="container-custom relative z-10 py-20 lg:py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="container-custom relative z-10 py-16 sm:py-20 lg:py-24">
+        {/* 
+          ✅ Mobile:  1 column (text upar, image neeche)
+          ✅ Tablet:  1 column
+          ✅ Desktop: 2 column (side by side)
+        */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-center">
 
-          {/* ── LEFT COLUMN ── */}
+          {/* ══════════════════════════
+              LEFT COLUMN — Text
+          ══════════════════════════ */}
           <div className="flex flex-col items-start">
 
             {/* Badge */}
-            <div className="animate-in mb-6">
+            <div className="animate-in mb-5 sm:mb-6">
               <div
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
                   border border-card-theme bg-card-theme"
@@ -268,8 +221,8 @@ export const Hero: React.FC = () => {
 
             {/* Headline */}
             <h1
-              className="animate-in-delay-1 text-3xl sm:text-4xl lg:text-[48px] font-bold
-                tracking-tight leading-[1.1] mb-5"
+              className="animate-in-delay-1 text-3xl sm:text-4xl lg:text-[48px]
+                font-bold tracking-tight leading-[1.1] mb-4 sm:mb-5"
             >
               <span className="text-primary-theme">We Build </span>
               <span className="linear-text">Digital Products</span>
@@ -299,7 +252,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="animate-in-delay-2 text-base sm:text-lg text-secondary-theme leading-relaxed max-w-lg mb-6">
+            <p className="animate-in-delay-2 text-base sm:text-lg text-secondary-theme leading-relaxed max-w-lg mb-5 sm:mb-6">
               From idea to launch — we design and develop{" "}
               <span className="font-semibold text-primary-theme">websites</span>,{" "}
               <span className="font-semibold text-primary-theme">mobile apps</span> &{" "}
@@ -308,7 +261,7 @@ export const Hero: React.FC = () => {
             </p>
 
             {/* Highlights */}
-            <div className="animate-in-delay-2 flex flex-wrap gap-x-5 gap-y-2 mb-7">
+            <div className="animate-in-delay-2 flex flex-wrap gap-x-4 sm:gap-x-5 gap-y-2 mb-6 sm:mb-7">
               {HERO_HIGHLIGHTS.map((item) => (
                 <div
                   key={item}
@@ -321,8 +274,8 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="animate-in-delay-3 flex flex-col sm:flex-row gap-3 mb-9 w-full sm:w-auto">
-              <Link href="/contact">
+            <div className="animate-in-delay-3 flex flex-col sm:flex-row gap-3 mb-8 sm:mb-9 w-full sm:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <button
                   className="group relative w-full sm:w-auto inline-flex items-center
                     justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm
@@ -344,10 +297,10 @@ export const Hero: React.FC = () => {
                 </button>
               </Link>
 
-              <Link href="/portfolio">
+              <Link href="/portfolio" className="w-full sm:w-auto">
                 <button
-                  className="group w-full sm:w-auto inline-flex items-center justify-center
-                    gap-2 px-6 py-3.5 rounded-xl font-bold text-sm
+                  className="group w-full sm:w-auto inline-flex items-center
+                    justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm
                     border border-card-theme bg-card-theme text-primary-theme
                     hover:bg-secondary-theme transition-all duration-300
                     hover:scale-[1.02] active:scale-95"
@@ -355,8 +308,7 @@ export const Hero: React.FC = () => {
                   View Our Work
                   <ArrowRight
                     size={14}
-                    className="group-hover:translate-x-1 transition-transform duration-300
-                      opacity-60"
+                    className="group-hover:translate-x-1 transition-transform duration-300 opacity-60"
                   />
                 </button>
               </Link>
@@ -380,7 +332,12 @@ export const Hero: React.FC = () => {
               <div>
                 <div className="flex mb-0.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={11} className="text-yellow-400" fill="currentColor" />
+                    <Star
+                      key={i}
+                      size={11}
+                      className="text-yellow-400"
+                      fill="currentColor"
+                    />
                   ))}
                 </div>
                 <span className="text-xs text-secondary-theme">
@@ -390,10 +347,14 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* ── RIGHT COLUMN ── */}
-          <div className="relative hidden lg:flex items-center justify-center">
-            <ServiceVisual />
+          {/* ══════════════════════════
+              RIGHT COLUMN — Image
+              ✅ Mobile pe bhi show hoga
+          ══════════════════════════ */}
+          <div className="relative flex items-center justify-center mt-4 sm:mt-6 lg:mt-0">
+            <HeroRightImage />
           </div>
+
         </div>
       </div>
     </section>
