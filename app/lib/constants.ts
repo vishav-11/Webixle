@@ -378,3 +378,8 @@ export const FOOTER_LINKS = {
     { label: "Security", href: "#" },
   ],
 } as const;
+
+export const NAVBAR_HEIGHT = {
+  mobile: 64,   // px — mobile navbar height
+  desktop: 72,  // px — desktop navbar height
+};

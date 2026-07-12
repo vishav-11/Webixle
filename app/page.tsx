@@ -155,7 +155,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HeroSlider />
+      <div className="pt-12 lg:pt-8">  {/* navbar height */}
+        <HeroSlider />
+      </div>
       <Hero />
       <Services />
       <WhyChooseUs />
