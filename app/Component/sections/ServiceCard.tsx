@@ -125,18 +125,20 @@ const ServiceCard: React.FC<{
       </p>
 
       {/* Learn More */}
-      <div
-        className="flex items-center gap-1.5 text-sm font-semibold text-primary-500
-          group-hover:gap-2.5 transition-all duration-300"
-      >
-        <span>Learn More</span>
-        <ArrowRight size={14} />
-      </div>
+      <Link href="/services">
+        <div
+          className="flex items-center gap-1.5 text-sm font-semibold text-primary-500
+      group-hover:gap-2.5 transition-all duration-300 cursor-pointer"
+        >
+          <span>Learn More</span>
+          <ArrowRight size={14} />
+        </div>
+      </Link>
 
       {/* Bottom accent line */}
       <div
-        className="absolute bottom-0 left-0 h-[2px] w-0 rounded-b-2xl
-          bg-gradient-to-r from-primary-500 to-accent-500
+        className="absolute bottom-0 left-0 h-0.5 w-0 rounded-b-2xl
+          bg-linear-to-r from-primary-500 to-accent-500
           group-hover:w-full transition-all duration-500"
       />
     </div>

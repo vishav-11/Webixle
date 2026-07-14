@@ -52,9 +52,9 @@ const SERVICE_OPTIONS = [
 ];
 
 const COMPANY = {
-  email: "hello@webixle.com",
-  phone: "+91 98765 43210",
-  address: "Mumbai, India",
+  email: "contact@webixle.com",
+  phone: "+91 8796610171",
+  address: "Gurgaon, India",
 };
 
 // ✅ Google Form Entry IDs — Form banao phir inspect karke IDs lo
@@ -126,7 +126,7 @@ const CONTACT_INFO = [
   {
     icon: Clock,
     label: "Working Hours",
-    value: "Mon–Sat, 9AM–7PM IST",
+    value: "Mon–Fri, 9AM–5PM IST",
     href: null,
   },
 ];

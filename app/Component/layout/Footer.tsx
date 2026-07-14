@@ -9,9 +9,9 @@ const COMPANY = {
   name: "Webixle",
   description:
     "A full-service digital studio helping businesses turn ideas into reality through design, development, and marketing.",
-  email: "hello@webixle.com",
-  phone: "+91 98765 43210",
-  address: "Mumbai, India",
+  email: "contact@webixle.com",
+  phone: "+91 8796610171",
+  address: "Gurgaon, India",
   social: {
     twitter: "https://twitter.com/webixle",
     linkedin: "https://linkedin.com/company/webixle",

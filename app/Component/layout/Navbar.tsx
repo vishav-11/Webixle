@@ -243,7 +243,7 @@ export const Navbar: React.FC = () => {
                 </motion.button>
 
                 {/* Sign In */}
-                <Link href="/contact">
+                {/* <Link href="/contact">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -268,10 +268,10 @@ export const Navbar: React.FC = () => {
                   >
                     Sign In
                   </motion.button>
-                </Link>
+                </Link> */}
 
                 {/* Get Started Button */}
-                <Link href="/demo">
+                <Link href="/contact">
                   <motion.button
                     whileHover={{
                       scale: 1.03,
@@ -414,9 +414,28 @@ export const Navbar: React.FC = () => {
                     {NAV_LINKS.map((link, index) => (
                       <motion.li key={link.href} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + index * 0.055, type: "spring", stiffness: 300, damping: 24 }}>
                         <Link href={link.href} onClick={() => setIsMobileOpen(false)} className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200" style={isActive(link.href) ? { background: "linear-linear(135deg, rgba(99,102,241,0.88) 0%, rgba(217,70,239,0.88) 100%)", color: "#ffffff", boxShadow: "0 4px 15px rgba(99,102,241,0.30)" } : { color: isDark ? "#94a3b8" : "#475569" }} onMouseEnter={(e) => { if (!isActive(link.href)) { e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(241,245,249,1)"; e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a"; } }} onMouseLeave={(e) => { if (!isActive(link.href)) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569"; } }}>
-                          <span>{link.label}</span>
-                          {isActive(link.href) ? <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" /> : <ArrowRight size={13} style={{ color: isDark ? "#64748b" : "#cbd5e1" }} />}
-                        </Link>
+                          <span
+                            style={{
+                              color: isActive(link.href)
+                                ? isDark
+                                  ? "#ffffff"
+                                  : "#0f172a"
+                                : isDark
+                                  ? "#94a3b8"
+                                  : "#475569",
+                              transition: "color 0.2s ease",
+                            }}
+                          >
+                            {link.label}
+                          </span>
+                          {isActive(link.href) ? (
+                            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
+                          ) : (
+                            <ArrowRight
+                              size={13}
+                              style={{ color: isDark ? "#64748b" : "#cbd5e1" }}
+                            />
+                          )}                        </Link>
                       </motion.li>
                     ))}
                   </ul>
@@ -443,16 +462,16 @@ export const Navbar: React.FC = () => {
                     </motion.button>
                   </div>
 
-                  <Link href="/contact" className="block" onClick={() => setIsMobileOpen(false)}>
+                  {/* <Link href="/contact" className="block" onClick={() => setIsMobileOpen(false)}>
                     <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} className="w-full py-2.5 rounded-2xl text-sm font-medium transition-all duration-200" style={{ background: "transparent", border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(226,232,240,1)", color: isDark ? "#94a3b8" : "#475569" }} onMouseEnter={(e) => { e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.05)" : "rgba(241,245,249,1)"; e.currentTarget.style.color = isDark ? "#f1f5f9" : "#0f172a"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#94a3b8" : "#475569"; }}>
                       Sign In
                     </motion.button>
-                  </Link>
+                  </Link> */}
 
                   <Link href="/demo" className="block" onClick={() => setIsMobileOpen(false)}>
-                    <motion.button whileHover={{ scale: 1.01, boxShadow: "0 8px 25px rgba(99,102,241,0.45)" }} whileTap={{ scale: 0.99 }} className="relative w-full py-2.5 rounded-2xl text-sm font-semibold text-white overflow-hidden group" style={{ background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", boxShadow: "0 4px 15px rgba(99,102,241,0.35)" }}>
+                    <motion.button whileHover={{ scale: 1.01, boxShadow: "0 8px 25px rgba(99,102,241,0.45)" }} whileTap={{ scale: 0.99 }} className="relative w-full py-2.5 rounded-2xl text-sm font-semibold text-[#9576F8] overflow-hidden group" style={{ background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", boxShadow: "0 4px 15px rgba(99,102,241,0.35)" }}>
                       <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                      <span className="relative flex items-center justify-center gap-2"><Zap size={14} className="fill-white" />Get Started Free</span>
+                      <span className="relative flex items-center justify-center gap-2 fill-[#9576F8]"><Zap size={14} className="fill-[#9576F8]" />Get Started Free</span>
                     </motion.button>
                   </Link>
                 </motion.div>

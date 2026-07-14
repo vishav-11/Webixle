@@ -190,7 +190,7 @@ export const Hero: React.FC = () => {
     <section className="relative overflow-hidden bg-mesh pt-16">
       <HeroBackground />
 
-      <div className="container-custom relative z-10 py-16 sm:py-20 lg:py-24">
+      <div className="container-custom relative z-10 py-1 sm:py-20 lg:py-24">
         {/* 
           ✅ Mobile:  1 column (text upar, image neeche)
           ✅ Tablet:  1 column
