@@ -297,7 +297,7 @@ export const Hero: React.FC = () => {
                 </button>
               </Link>
 
-              <Link href="/portfolio" className="w-full sm:w-auto">
+              <Link href="/services" className="w-full sm:w-auto">
                 <button
                   className="group w-full sm:w-auto inline-flex items-center
                     justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm

@@ -1,16 +1,52 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image, { type StaticImageData } from "next/image";
 import {
   ArrowRight,
+  X,
   ExternalLink,
   Globe,
   Smartphone,
   Layout,
   ShoppingBag,
   Filter,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
+import ECommerce from "@/public/Image/project/E-commerce.png";
+import CryptoNest from "@/public/Image/project/crypto.png";
+import Engineering from "@/public/Image/project/eng.png";
+import Psychologist from "@/public/Image/project/Psychologist.png";
+
+// ============================================
+// TYPES
+// ============================================
+
+interface ProjectDetail {
+  overview: string;
+  challenge: string;
+  solution: string;
+  features: string[];
+  results: string[];
+  liveUrl?: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  categoryLabel: string;
+  description: string;
+  tags: string[];
+  gradient: string;
+  stats: { label: string; value: string }[];
+  image: StaticImageData; // ✅ Fixed: was string
+  featured: boolean;
+  emoji: string;
+  details?: ProjectDetail;
+}
 
 // ============================================
 // DATA
@@ -18,13 +54,13 @@ import {
 
 const FILTERS = [
   { id: "all", label: "All", icon: Filter },
-  { id: "web", label: "Web", icon: Globe },
+  { id: "ecommerce", label: "E-Commerce", icon: ShoppingBag },
+  { id: "web", label: "Web App", icon: Globe },
   { id: "mobile", label: "Mobile", icon: Smartphone },
   { id: "ui", label: "UI/UX", icon: Layout },
-  { id: "ecommerce", label: "E-Commerce", icon: ShoppingBag },
 ];
 
-const PROJECTS = [
+const PROJECTS: Project[] = [
   {
     id: 1,
     title: "ShopEase",
@@ -32,100 +68,70 @@ const PROJECTS = [
     categoryLabel: "E-Commerce",
     description:
       "Full-featured online store with Stripe payments and admin dashboard for a fashion brand scaling to 10K+ daily users.",
-    tags: ["Next.js", "Node.js", "Stripe"],
-    gradient: "from-blue-500 to-cyan-500",
+    tags: ["Next.js", "Node.js", "Stripe", "MongoDB"],
+    gradient: "from-violet-600 via-purple-600 to-indigo-700",
     stats: [
-      { label: "Users", value: "10K+" },
+      { label: "Daily Users", value: "10K+" },
       { label: "Uptime", value: "99.9%" },
     ],
-    liveUrl: "#",
+    image: ECommerce,
     featured: true,
     emoji: "🛍️",
+    details: undefined,
   },
   {
     id: 2,
-    title: "RideOn",
-    category: "mobile",
-    categoryLabel: "Mobile App",
+    title: "CryptoNest",
+    category: "web",
+    categoryLabel: "Web App",
     description:
-      "Cross-platform ride-hailing app with real-time GPS tracking and in-app wallet system.",
-    tags: ["Flutter", "Firebase", "Maps"],
-    gradient: "from-purple-500 to-pink-500",
+      "Crypto trading, staking & wallet platform with real-time charts, portfolio tracking, and secure wallet management.",
+    tags: ["React", "Web3.js", "Node.js", "PostgreSQL"],
+    gradient: "from-amber-500 via-orange-500 to-yellow-600",
     stats: [
-      { label: "Downloads", value: "25K+" },
-      { label: "Rating", value: "4.8⭐" },
+      { label: "Volume", value: "$2M+" },
+      { label: "Users", value: "5K+" },
     ],
-    liveUrl: "#",
+    image: CryptoNest,
     featured: true,
-    emoji: "🚕",
+    emoji: "₿",
+    details: undefined,
   },
   {
     id: 3,
-    title: "FinTrack",
+    title: "TechInstrument",
     category: "web",
     categoryLabel: "Web App",
     description:
-      "Real-time financial analytics dashboard with AI-powered insights and multi-bank integration.",
-    tags: ["React", "Python", "PostgreSQL"],
-    gradient: "from-green-500 to-emerald-500",
+      "Professional engineering & instrumentation website showcasing products, certifications, and technical specifications.",
+    tags: ["Next.js", "Tailwind", "CMS"],
+    gradient: "from-slate-600 via-blue-700 to-cyan-700",
     stats: [
-      { label: "Transactions", value: "1M+" },
-      { label: "Banks", value: "15+" },
+      { label: "Products", value: "500+" },
+      { label: "Clients", value: "120+" },
     ],
-    liveUrl: "#",
+    image: Engineering,
     featured: false,
-    emoji: "📊",
+    emoji: "⚙️",
+    details: undefined,
   },
   {
     id: 4,
-    title: "MediCare",
-    category: "mobile",
-    categoryLabel: "Mobile App",
-    description:
-      "Healthcare app with video consultations, e-prescriptions, and appointment reminders.",
-    tags: ["React Native", "WebRTC", "Node.js"],
-    gradient: "from-rose-500 to-orange-500",
-    stats: [
-      { label: "Doctors", value: "500+" },
-      { label: "Patients", value: "30K+" },
-    ],
-    liveUrl: "#",
-    featured: false,
-    emoji: "🏥",
-  },
-  {
-    id: 5,
-    title: "LMS Pro",
+    title: "MindEase",
     category: "web",
     categoryLabel: "Web App",
     description:
-      "Learning Management System with video courses, live classes, and certificate generation.",
-    tags: ["Next.js", "AWS S3", "Stripe"],
-    gradient: "from-indigo-500 to-violet-500",
+      "Psychologist practice website with online booking, session management, blog, and secure client portal.",
+    tags: ["Next.js", "Stripe", "Supabase"],
+    gradient: "from-rose-400 via-pink-500 to-fuchsia-600",
     stats: [
-      { label: "Students", value: "8K+" },
-      { label: "Courses", value: "200+" },
+      { label: "Bookings", value: "1K+" },
+      { label: "Rating", value: "4.9⭐" },
     ],
-    liveUrl: "#",
+    image: Psychologist,
     featured: false,
-    emoji: "🎓",
-  },
-  {
-    id: 6,
-    title: "FoodZone UI Kit",
-    category: "ui",
-    categoryLabel: "UI/UX",
-    description:
-      "Comprehensive design system for restaurant apps — 80+ screens and reusable Figma components.",
-    tags: ["Figma", "Design System"],
-    gradient: "from-yellow-500 to-orange-500",
-    stats: [
-      { label: "Screens", value: "80+" },
-      { label: "Downloads", value: "1.2K+" },
-    ],
-    liveUrl: "#",
-    featured: false,
-    emoji: "🍔",
+    emoji: "🧠",
+    details: undefined,
   },
 ];
 
@@ -174,35 +180,38 @@ const FilterTab: React.FC<{
 // ============================================
 
 const ProjectCard: React.FC<{
-  project: (typeof PROJECTS)[0];
+  project: Project;
   featured?: boolean;
-}> = ({ project, featured = false }) => (
+  onOpenModal: (project: Project) => void;
+}> = ({ project, featured = false, onOpenModal }) => (
   <div
     className={`group relative rounded-2xl border border-card-theme bg-card-theme overflow-hidden
-      transition-all duration-300 hover:-translate-y-1
-      hover:border-primary-500/30 hover:shadow-lg`}
+      transition-all duration-300 hover:-translate-y-1.5
+      hover:border-primary-500/30 hover:shadow-xl hover:shadow-primary-500/10`}
   >
-    {/* Visual Banner */}
+    {/* ── Visual Banner ── */}
     <div
-      className={`relative bg-gradient-to-br ${project.gradient} overflow-hidden
-        ${featured ? "h-48 sm:h-52" : "h-40"}`}
+      className={`relative bg-linear-to-br ${project.gradient} overflow-hidden
+        ${featured ? "h-52" : "h-44"}`}
     >
-      {/* Dot Pattern */}
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 2px 2px, rgba(255,255,255,0.5) 1px, transparent 0)",
-          backgroundSize: "22px 22px",
-        }}
+      {/* Project Image */}
+      <Image
+        src={project.image}
+        alt={project.title}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
       />
 
-      {/* Emoji */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />
+
+      {/* Emoji overlay */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <span
-          className={`select-none drop-shadow-lg group-hover:scale-110
-            transition-transform duration-500
-            ${featured ? "text-7xl" : "text-6xl"}`}
+          className={`select-none drop-shadow-2xl group-hover:scale-110
+            transition-transform duration-500 opacity-20
+            ${featured ? "text-8xl" : "text-7xl"}`}
         >
           {project.emoji}
         </span>
@@ -210,45 +219,32 @@ const ProjectCard: React.FC<{
 
       {/* Featured Badge */}
       {featured && (
-        <div className="absolute top-3 left-3">
-          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/25 text-white backdrop-blur-sm border border-white/20">
+        <div className="absolute top-3 left-3 z-10">
+          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/30 text-white backdrop-blur-sm border border-white/20">
             ⭐ Featured
           </span>
         </div>
       )}
 
-      {/* Live dot */}
-      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/25 backdrop-blur-sm border border-white/20">
-        <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-        <span className="text-[10px] font-bold text-white">Live</span>
+      {/* Category pill */}
+      <div className="absolute top-3 right-3 z-10">
+        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/30 text-white backdrop-blur-sm border border-white/20">
+          {project.categoryLabel}
+        </span>
+      </div>
+
+      {/* Title on banner bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+        <h3 className="text-lg font-bold text-white leading-tight drop-shadow-md">
+          {project.title}
+        </h3>
       </div>
     </div>
 
-    {/* Content */}
+    {/* ── Content ── */}
     <div className="p-5">
-      {/* Category */}
-      <span
-        className={`text-[10px] font-bold uppercase tracking-widest block mb-1.5
-          bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}
-      >
-        {project.categoryLabel}
-      </span>
-
-      {/* Title */}
-      <h3
-        className="text-base font-bold text-primary-theme mb-1.5 leading-tight
-        group-hover:text-primary-500 transition-colors"
-      >
-        {project.title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-sm text-secondary-theme leading-relaxed mb-3 line-clamp-2">
-        {project.description}
-      </p>
-
       {/* Tags */}
-      <div className="flex flex-wrap gap-1.5 mb-4">
+      <div className="flex flex-wrap gap-1.5 mb-3">
         {project.tags.map((tag) => (
           <span
             key={tag}
@@ -260,9 +256,13 @@ const ProjectCard: React.FC<{
         ))}
       </div>
 
-      {/* Divider + Stats + CTA */}
+      {/* Description */}
+      <p className="text-sm text-secondary-theme leading-relaxed mb-4 line-clamp-2">
+        {project.description}
+      </p>
+
+      {/* Stats + CTA */}
       <div className="flex items-center justify-between pt-3 border-t border-card-theme">
-        {/* Stats */}
         <div className="flex gap-4">
           {project.stats.map((stat) => (
             <div key={stat.label}>
@@ -274,19 +274,331 @@ const ProjectCard: React.FC<{
           ))}
         </div>
 
-        {/* CTA */}
-        <Link
-          href={project.liveUrl}
+        <button
+          onClick={() => onOpenModal(project)}
           className="flex items-center gap-1.5 text-xs font-bold
-            text-primary-500 hover:gap-2.5 transition-all duration-200"
+            text-primary-500 hover:gap-2.5 transition-all duration-200
+            hover:text-primary-600"
         >
           <ExternalLink size={13} />
-          View
-        </Link>
+          View Details
+        </button>
       </div>
     </div>
   </div>
 );
+
+// ============================================
+// PROJECT MODAL  ✅ Fixed: hooks now always run
+// ============================================
+
+const ProjectModal: React.FC<{
+  project: Project | null;
+  allProjects: Project[];
+  onClose: () => void;
+  onNavigate: (project: Project) => void;
+}> = ({ project, allProjects, onClose, onNavigate }) => {
+  // ✅ Fixed: All hooks BEFORE any conditional return
+  const currentIndex = project
+    ? allProjects.findIndex((p) => p.id === project.id)
+    : -1;
+
+  const prevProject =
+    currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+
+  const nextProject =
+    currentIndex >= 0 && currentIndex < allProjects.length - 1
+      ? allProjects[currentIndex + 1]
+      : null;
+
+  // ✅ Fixed: useCallback so deps array is stable
+  const handleKey = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && prevProject) onNavigate(prevProject);
+      if (e.key === "ArrowRight" && nextProject) onNavigate(nextProject);
+    },
+    [onClose, prevProject, nextProject, onNavigate]
+  );
+
+  useEffect(() => {
+    if (!project) return;
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [project, handleKey]);
+
+  useEffect(() => {
+    if (!project) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [project]);
+
+  // ✅ Conditional return AFTER all hooks
+  if (!project) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-999 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.title} details`}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal Panel */}
+      <div
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl
+          bg-card-theme border border-card-theme shadow-2xl
+          flex flex-col overflow-hidden"
+        // ✅ stop click from bubbling to backdrop
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* ── Banner ── */}
+        <div
+          className={`relative h-52 bg-linear-to-br ${project.gradient} shrink-0`}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 672px"
+            className="object-cover opacity-75"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+
+          {/* Close */}
+          <button
+            onClick={onClose}
+            aria-label="Close modal"
+            className="absolute top-4 right-4 z-10 p-2 rounded-xl
+              bg-black/30 hover:bg-black/50 backdrop-blur-sm
+              border border-white/20 text-white transition-all duration-200"
+          >
+            <X size={16} />
+          </button>
+
+          {/* Prev */}
+          {prevProject && (
+            <button
+              onClick={() => onNavigate(prevProject)}
+              aria-label={`Previous: ${prevProject.title}`}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-xl
+                bg-black/30 hover:bg-black/50 backdrop-blur-sm
+                border border-white/20 text-white transition-all duration-200"
+            >
+              <ChevronLeft size={18} />
+            </button>
+          )}
+
+          {/* Next — ✅ Fixed: was overlapping close button */}
+          {nextProject && (
+            <button
+              onClick={() => onNavigate(nextProject)}
+              aria-label={`Next: ${nextProject.title}`}
+              className="absolute right-14 top-1/2 -translate-y-1/2 z-10 p-2 rounded-xl
+                bg-black/30 hover:bg-black/50 backdrop-blur-sm
+                border border-white/20 text-white transition-all duration-200"
+            >
+              <ChevronRight size={18} />
+            </button>
+          )}
+
+          {/* Title */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/70 mb-1 block">
+              {project.categoryLabel}
+            </span>
+            <h2 className="text-2xl font-bold text-white">{project.title}</h2>
+          </div>
+        </div>
+
+        {/* ── Scrollable Body ── */}
+        <div className="overflow-y-auto flex-1 p-6 space-y-6">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs font-semibold px-2.5 py-1 rounded-lg
+                  bg-secondary-theme border border-card-theme text-secondary-theme"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div
+            className={`grid gap-3 ${
+              project.stats.length <= 2
+                ? "grid-cols-2"
+                : "grid-cols-2 sm:grid-cols-4"
+            }`}
+          >
+            {project.stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-xl p-3 bg-secondary-theme border border-card-theme text-center"
+              >
+                <div className="text-lg font-bold text-primary-theme">
+                  {stat.value}
+                </div>
+                <div className="text-[11px] text-tertiary-theme mt-0.5">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* About */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-2">
+              About
+            </h4>
+            <p className="text-sm text-secondary-theme leading-relaxed">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Details */}
+          {project.details ? (
+            <>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-2">
+                  Overview
+                </h4>
+                <p className="text-sm text-secondary-theme leading-relaxed">
+                  {project.details.overview}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-2">
+                  The Challenge
+                </h4>
+                <p className="text-sm text-secondary-theme leading-relaxed">
+                  {project.details.challenge}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-2">
+                  Our Solution
+                </h4>
+                <p className="text-sm text-secondary-theme leading-relaxed">
+                  {project.details.solution}
+                </p>
+              </div>
+
+              {project.details.features.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-3">
+                    Key Features
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {project.details.features.map((feature, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2 text-sm text-secondary-theme"
+                      >
+                        <span
+                          className={`mt-0.5 w-4 h-4 rounded-full bg-linear-to-br
+                            ${project.gradient} flex items-center justify-center shrink-0`}
+                        >
+                          <span className="text-white text-[8px] font-bold">
+                            ✓
+                          </span>
+                        </span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {project.details.results.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-tertiary-theme mb-3">
+                    Results
+                  </h4>
+                  <ul className="space-y-2">
+                    {project.details.results.map((result, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2 text-sm text-secondary-theme"
+                      >
+                        <span className="text-primary-500 font-bold mt-0.5 shrink-0">
+                          →
+                        </span>
+                        {result}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="rounded-xl border border-dashed border-card-theme p-6 text-center">
+              <p className="text-sm text-tertiary-theme">
+                Detailed case study coming soon.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ── Footer ── */}
+        <div className="shrink-0 px-6 py-4 border-t border-card-theme flex items-center justify-between gap-3">
+          {/* Dot indicators */}
+          <div className="flex items-center gap-1.5">
+            {allProjects.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => onNavigate(p)}
+                aria-label={`Go to ${p.title}`}
+                className={`rounded-full transition-all duration-200 ${
+                  p.id === project.id
+                    ? "w-5 h-1.5 bg-primary-500"
+                    : "w-1.5 h-1.5 bg-tertiary-theme hover:bg-secondary-theme"
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Action */}
+          {project.details?.liveUrl ? (
+            <Link
+              href={project.details.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg
+                bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold
+                transition-all duration-200 active:scale-95
+                shadow-md shadow-primary-500/25"
+            >
+              <ExternalLink size={13} />
+              Live Site
+            </Link>
+          ) : (
+            <button
+              onClick={onClose}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg
+                bg-secondary-theme hover:bg-card-theme text-secondary-theme
+                text-xs font-bold transition-all duration-200 border border-card-theme"
+            >
+              Close
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // ============================================
 // MAIN COMPONENT
@@ -294,6 +606,7 @@ const ProjectCard: React.FC<{
 
 export const Portfolio: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const filteredProjects = PROJECTS.filter(
     (p) => activeFilter === "all" || p.category === activeFilter
@@ -304,93 +617,106 @@ export const Portfolio: React.FC = () => {
       ? PROJECTS.length
       : PROJECTS.filter((p) => p.category === filterId).length;
 
+  const handleCloseModal = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
+
   return (
-    <section className="relative section-padding bg-secondary-theme overflow-hidden">
-      {/* Background blobs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary-500/5 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-accent-500/5 blur-[80px] pointer-events-none" />
+    <>
+      <section className="relative section-padding bg-secondary-theme overflow-hidden">
+        {/* Background blobs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary-500/5 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-accent-500/5 blur-[80px] pointer-events-none" />
 
-      <div className="container-custom relative z-10">
-        {/* ── Header ── */}
-        <div className="text-center mb-10 animate-in">
-          {/* Badge */}
-          <span
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-            text-xs font-bold uppercase tracking-widest mb-4
-            bg-card-theme border border-card-theme text-secondary-theme"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-500" />
+        <div className="container-custom relative z-10">
+          {/* ── Header ── */}
+          <div className="text-center mb-10 animate-in">
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
+              text-xs font-bold uppercase tracking-widest mb-4
+              bg-card-theme border border-card-theme text-secondary-theme"
+            >
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary-500" />
+              </span>
+              Our Portfolio
             </span>
-            Our Portfolio
-          </span>
 
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight
-            text-primary-theme mb-3"
-          >
-            Work We're{" "}
-            <span className="gradient-text">Proud Of</span>
-          </h2>
+            <h2
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight
+              text-primary-theme mb-3"
+            >
+              Work We&apos;re <span className="linear-text">Proud Of</span>
+            </h2>
 
-          <p className="text-sm sm:text-base text-secondary-theme max-w-xl mx-auto">
-            Real products, real clients, real results — across multiple
-            industries.
-          </p>
-        </div>
-
-        {/* ── Filter Tabs ── */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 animate-in-delay-1">
-          {FILTERS.map((filter) => (
-            <FilterTab
-              key={filter.id}
-              filter={filter}
-              isActive={activeFilter === filter.id}
-              onClick={() => setActiveFilter(filter.id)}
-              count={getCount(filter.id)}
-            />
-          ))}
-        </div>
-
-        {/* ── Grid ── */}
-        {filteredProjects.length === 0 ? (
-          <div className="text-center py-20 text-tertiary-theme text-sm">
-            No projects in this category.
+            <p className="text-sm sm:text-base text-secondary-theme max-w-xl mx-auto">
+              Real products, real clients, real results — across multiple
+              industries.
+            </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-in-delay-2">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                featured={project.featured}
+
+          {/* ── Filter Tabs ── */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 animate-in-delay-1">
+            {FILTERS.map((filter) => (
+              <FilterTab
+                key={filter.id}
+                filter={filter}
+                isActive={activeFilter === filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                count={getCount(filter.id)}
               />
             ))}
           </div>
-        )}
 
-        {/* ── CTA ── */}
-        <div className="mt-12 text-center animate-in-delay-3">
-          <p className="text-sm text-secondary-theme mb-4">
-            These are just highlights —{" "}
-            <span className="font-semibold text-primary-theme">
-              we've built 150+ projects.
-            </span>
-          </p>
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-              bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold
-              transition-all duration-200 active:scale-95
-              shadow-md shadow-primary-500/25 hover:shadow-lg hover:shadow-primary-500/30"
-          >
-            View All Projects
-            <ArrowRight size={15} />
-          </Link>
+          {/* ── Grid ── */}
+          {filteredProjects.length === 0 ? (
+            <div className="text-center py-20 text-tertiary-theme text-sm">
+              No projects in this category yet.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 animate-in-delay-2">
+              {filteredProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  featured={project.featured}
+                  onOpenModal={setSelectedProject}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* ── CTA ── */}
+          <div className="mt-12 text-center animate-in-delay-3">
+            <p className="text-sm text-secondary-theme mb-4">
+              These are just highlights —{" "}
+              <span className="font-semibold text-primary-theme">
+                we&apos;ve delivered 50+ successful projects.
+              </span>
+            </p>
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
+                bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold
+                transition-all duration-200 active:scale-95
+                shadow-md shadow-primary-500/25 hover:shadow-lg hover:shadow-primary-500/30"
+            >
+              View All Projects
+              <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ── Modal ── */}
+      <ProjectModal
+        project={selectedProject}
+        allProjects={PROJECTS}
+        onClose={handleCloseModal}
+        onNavigate={setSelectedProject}
+      />
+    </>
   );
 };
 

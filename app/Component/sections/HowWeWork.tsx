@@ -13,6 +13,8 @@ import {
   Clock,
   ChevronDown,
 } from "lucide-react";
+import Link from "next/link";
+
 
 // ============================================
 // DATA
@@ -27,8 +29,8 @@ const PROCESS_STEPS = [
       "We deeply understand your requirements, business goals, and target audience to define the project scope clearly.",
     icon: MessageSquare,
     duration: "1-2 Days",
-    gradient: "from-blue-500 to-cyan-500",
-    bgGradient: "from-blue-500/10 to-cyan-500/10",
+    linear: "from-blue-500 to-cyan-500",
+    bglinear: "from-blue-500/10 to-cyan-500/10",
     borderColor: "border-blue-500/30",
     deliverables: [
       "Project Brief",
@@ -47,8 +49,8 @@ const PROCESS_STEPS = [
       "Wireframes and high-fidelity designs aligned with your brand. Every screen approved before development.",
     icon: Palette,
     duration: "3-7 Days",
-    gradient: "from-purple-500 to-pink-500",
-    bgGradient: "from-purple-500/10 to-pink-500/10",
+    linear: "from-purple-500 to-pink-500",
+    bglinear: "from-purple-500/10 to-pink-500/10",
     borderColor: "border-purple-500/30",
     deliverables: [
       "Wireframes",
@@ -67,8 +69,8 @@ const PROCESS_STEPS = [
       "Clean, scalable code using modern frameworks. Weekly updates keep you informed throughout the build.",
     icon: Code2,
     duration: "2-8 Weeks",
-    gradient: "from-primary-500 to-accent-500",
-    bgGradient: "from-primary-500/10 to-accent-500/10",
+    linear: "from-primary-500 to-accent-500",
+    bglinear: "from-primary-500/10 to-accent-500/10",
     borderColor: "border-primary-500/30",
     deliverables: [
       "Frontend Dev",
@@ -87,8 +89,8 @@ const PROCESS_STEPS = [
       "Rigorous unit, integration, and manual QA testing. Delivered only after all bugs are resolved.",
     icon: TestTube,
     duration: "3-5 Days",
-    gradient: "from-orange-500 to-yellow-500",
-    bgGradient: "from-orange-500/10 to-yellow-500/10",
+    linear: "from-orange-500 to-yellow-500",
+    bglinear: "from-orange-500/10 to-yellow-500/10",
     borderColor: "border-orange-500/30",
     deliverables: [
       "Bug-Free Build",
@@ -107,8 +109,8 @@ const PROCESS_STEPS = [
       "Production deployment with domain, SSL, and performance optimization for a smooth go-live.",
     icon: Rocket,
     duration: "1-2 Days",
-    gradient: "from-green-500 to-emerald-500",
-    bgGradient: "from-green-500/10 to-emerald-500/10",
+    linear: "from-green-500 to-emerald-500",
+    bglinear: "from-green-500/10 to-emerald-500/10",
     borderColor: "border-green-500/30",
     deliverables: [
       "Live Deployment",
@@ -127,8 +129,8 @@ const PROCESS_STEPS = [
       "Post-launch support with bug fixes, feature updates, and scaling assistance. Your success is our priority.",
     icon: HeartHandshake,
     duration: "Ongoing",
-    gradient: "from-rose-500 to-pink-500",
-    bgGradient: "from-rose-500/10 to-pink-500/10",
+    linear: "from-rose-500 to-pink-500",
+    bglinear: "from-rose-500/10 to-pink-500/10",
     borderColor: "border-rose-500/30",
     deliverables: [
       "30-Day Free Support",
@@ -152,10 +154,9 @@ const StepBadge: React.FC<{
 }> = ({ number, isActive, dotColor }) => (
   <div
     className={`relative flex items-center justify-center w-10 h-10 rounded-full border-2 
-      font-bold text-sm transition-all duration-300 shrink-0 ${
-        isActive
-          ? `${dotColor} border-transparent text-white scale-110 shadow-lg`
-          : "border-card-theme bg-card-theme text-secondary-theme"
+      font-bold text-sm transition-all duration-300 shrink-0 ${isActive
+        ? `${dotColor} border-transparent text-white scale-110 shadow-lg`
+        : "border-card-theme bg-card-theme text-secondary-theme"
       }`}
   >
     {isActive ? (
@@ -193,11 +194,10 @@ const TimelineStep: React.FC<{
         />
         {!isLast && (
           <div
-            className={`w-0.5 flex-1 mt-2 transition-all duration-500 ${
-              isActive
-                ? `bg-gradient-to-b ${step.gradient}`
+            className={`w-0.5 flex-1 mt-2 transition-all duration-500 ${isActive
+                ? `bg-linear-to-b ${step.linear}`
                 : "bg-card-theme"
-            }`}
+              }`}
             style={{ minHeight: "40px" }}
           />
         )}
@@ -205,18 +205,17 @@ const TimelineStep: React.FC<{
 
       {/* Right: Card */}
       <div
-        className={`flex-1 mb-6 rounded-2xl border transition-all duration-300 overflow-hidden ${
-          isActive
-            ? `bg-gradient-to-br ${step.bgGradient} ${step.borderColor} shadow-md`
+        className={`flex-1 mb-6 rounded-2xl border transition-all duration-300 overflow-hidden ${isActive
+            ? `bg-linear-to-br ${step.bglinear} ${step.borderColor} shadow-md`
             : "bg-card-theme border-card-theme hover:border-primary-500/20"
-        }`}
+          }`}
       >
         {/* Header */}
         <div className="flex items-start justify-between p-5">
           <div className="flex items-center gap-3">
             <div
               className={`flex items-center justify-center w-10 h-10 rounded-xl 
-                bg-gradient-to-br ${step.gradient} shadow-md shrink-0`}
+                bg-linear-to-br ${step.linear} shadow-md shrink-0`}
             >
               <Icon size={18} className="text-white" />
             </div>
@@ -243,9 +242,8 @@ const TimelineStep: React.FC<{
 
         {/* Expanded */}
         <div
-          className={`transition-all duration-500 overflow-hidden ${
-            isActive ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`transition-all duration-500 overflow-hidden ${isActive ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <div className="px-5 pb-5">
             <p className="text-sm text-secondary-theme leading-relaxed mb-4">
@@ -291,13 +289,13 @@ const ActiveStepPanel: React.FC<{ step: (typeof PROCESS_STEPS)[0] }> = ({
   return (
     <div
       className={`sticky top-24 rounded-2xl border p-6 
-        bg-gradient-to-br ${step.bgGradient} ${step.borderColor} 
+        bg-linear-to-br ${step.bglinear} ${step.borderColor} 
         transition-all duration-500 shadow-lg`}
     >
       {/* Icon */}
       <div
         className={`inline-flex items-center justify-center w-12 h-12 rounded-xl 
-          bg-gradient-to-br ${step.gradient} shadow-md mb-5`}
+          bg-linear-to-br ${step.linear} shadow-md mb-5`}
       >
         <Icon size={24} className="text-white" />
       </div>
@@ -325,7 +323,7 @@ const ActiveStepPanel: React.FC<{ step: (typeof PROCESS_STEPS)[0] }> = ({
       </div>
 
       {/* Divider */}
-      <div className={`w-full h-px bg-gradient-to-r ${step.gradient} opacity-20 mb-5`} />
+      <div className={`w-full h-px bg-linear-to-r ${step.linear} opacity-20 mb-5`} />
 
       {/* Deliverables */}
       <p className="text-[10px] font-bold uppercase tracking-widest text-tertiary-theme mb-3">
@@ -336,7 +334,7 @@ const ActiveStepPanel: React.FC<{ step: (typeof PROCESS_STEPS)[0] }> = ({
           <div key={i} className="flex items-center gap-2.5">
             <div
               className={`flex items-center justify-center w-4 h-4 rounded-full 
-                bg-gradient-to-br ${step.gradient} shrink-0`}
+                bg-linear-to-br ${step.linear} shrink-0`}
             >
               <CheckCircle2 size={10} className="text-white" />
             </div>
@@ -348,7 +346,7 @@ const ActiveStepPanel: React.FC<{ step: (typeof PROCESS_STEPS)[0] }> = ({
       {/* CTA */}
       <button
         className={`w-full py-2.5 rounded-xl font-bold text-sm text-white 
-          bg-gradient-to-r ${step.gradient} hover:opacity-90 active:scale-95 
+          bg-linear-to-r ${step.linear} hover:opacity-90 active:scale-95 
           transition-all duration-200 flex items-center justify-center gap-2 shadow-md`}
       >
         Start Your Project
@@ -371,11 +369,10 @@ const MobileStepCard: React.FC<{
 
   return (
     <div
-      className={`rounded-xl border transition-all duration-300 overflow-hidden ${
-        isOpen
-          ? `bg-gradient-to-br ${step.bgGradient} ${step.borderColor}`
+      className={`rounded-xl border transition-all duration-300 overflow-hidden ${isOpen
+          ? `bg-linear-to-br ${step.bglinear} ${step.borderColor}`
           : "bg-card-theme border-card-theme"
-      }`}
+        }`}
     >
       <button
         className="w-full flex items-center justify-between p-4 text-left"
@@ -384,7 +381,7 @@ const MobileStepCard: React.FC<{
         <div className="flex items-center gap-3">
           <div
             className={`flex items-center justify-center w-9 h-9 rounded-lg 
-              bg-gradient-to-br ${step.gradient} shrink-0`}
+              bg-linear-to-br ${step.linear} shrink-0`}
           >
             <Icon size={16} className="text-white" />
           </div>
@@ -404,17 +401,15 @@ const MobileStepCard: React.FC<{
           </span>
           <ChevronDown
             size={15}
-            className={`text-secondary-theme transition-transform duration-300 ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={`text-secondary-theme transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+              }`}
           />
         </div>
       </button>
 
       <div
-        className={`transition-all duration-300 overflow-hidden ${
-          isOpen ? "max-h-72" : "max-h-0"
-        }`}
+        className={`transition-all duration-300 overflow-hidden ${isOpen ? "max-h-72" : "max-h-0"
+          }`}
       >
         <div className="px-4 pb-4 space-y-3">
           <div className="h-px bg-card-theme" />
@@ -436,7 +431,7 @@ const MobileStepCard: React.FC<{
 };
 
 // ============================================
-// MAIN COMPONENT
+// MAIN COMPONENTF
 // ============================================
 
 export const WorkProcess: React.FC = () => {
@@ -465,7 +460,7 @@ export const WorkProcess: React.FC = () => {
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-primary-theme mb-3">
             From Idea to{" "}
-            <span className="gradient-text">Live Product</span>
+            <span className="linear-text">Live Product</span>
           </h2>
 
           <p className="text-sm sm:text-base text-secondary-theme max-w-xl mx-auto">
@@ -501,12 +496,12 @@ export const WorkProcess: React.FC = () => {
         {/* ── Bottom CTA ── */}
         <div className="mt-16 animate-in-delay-3">
           <div className="relative rounded-2xl overflow-hidden border border-card-theme">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-600/90 to-accent-600/90" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary-600/90 to-accent-600/90" />
             <div
               className="absolute inset-0 opacity-10"
               style={{
                 backgroundImage:
-                  "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+                  "radial-linear(circle at 1px 1px, white 1px, transparent 0)",
                 backgroundSize: "24px 24px",
               }}
             />
@@ -520,13 +515,18 @@ export const WorkProcess: React.FC = () => {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                <button className="px-5 py-2.5 rounded-xl bg-white text-primary-700 font-bold text-sm hover:bg-primary-50 transition-colors active:scale-95 whitespace-nowrap flex items-center gap-2">
-                  Book Free Call
-                  <ArrowRight size={15} />
-                </button>
-                <button className="px-5 py-2.5 rounded-xl border border-white/30 text-white font-bold text-sm hover:bg-white/10 transition-colors active:scale-95 whitespace-nowrap">
-                  View Portfolio
-                </button>
+                <Link href="/contact">
+                  <button className="px-5 py-2.5 rounded-xl bg-white text-primary-700 font-bold text-sm hover:bg-primary-50 transition-colors active:scale-95 whitespace-nowrap flex items-center gap-2">
+                    Book Free Call
+                    <ArrowRight size={15} />
+                  </button>
+                </Link>
+
+                <Link href="/about">
+                  <button className="px-5 py-2.5 rounded-xl border border-white/30 text-white font-bold text-sm hover:bg-white/10 transition-colors active:scale-95 whitespace-nowrap">
+                    View Portfolio
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
