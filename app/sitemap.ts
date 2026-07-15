@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: "https://webixle.com/portfolio",
+      url: "https://webixle.com/demo",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
