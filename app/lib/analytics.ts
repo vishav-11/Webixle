@@ -9,7 +9,7 @@ declare global {
 // ✅ Page View Track karo
 export const pageview = (url: string) => {
   if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("config", "G-XXXXXXXXXX", {
+    window.gtag("config", "G-P0M6T97CCL", {
       page_path: url,
     });
   }

@@ -61,18 +61,17 @@ const COMPANY = {
 // Google Form URL format:
 // https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
 const GOOGLE_FORM_CONFIG = {
-  // ⚠️ Apna Google Form URL yahan daalo
   formUrl:
-    "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse",
+    "https://docs.google.com/forms/d/e/1FAIpQLSe1ddVzI9KDCnZ4V5IKteJOq0nRm0twFV78khZekU0YDpiLTg/formResponse",
+
   fields: {
-    // ⚠️ Ye entry IDs Google Form se milegi (niche steps mein bataya hai)
-    firstName: "entry.000000001",
-    lastName:  "entry.000000002",
-    email:     "entry.000000003",
-    company:   "entry.000000004",
-    phone:     "entry.000000005",
-    service:   "entry.000000006",
-    message:   "entry.000000007",
+    firstName: "entry.1880672630",
+    lastName: "entry.1177225514",
+    email: "entry.1347996278",
+    company: "entry.317965147",
+    phone: "entry.1446674713",
+    service: "entry.2030459280",
+    message: "entry.4090149",
   },
 };
 

@@ -12,24 +12,19 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// ✅ Google Analytics ID — apna ID daalo
-const GA_ID = "G-XXXXXXXXXX";
+// ✅ GA ID .env.local se le raha hai
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 // ============================================
 // ✅ FULL SEO METADATA
 // ============================================
 export const metadata: Metadata = {
-  // ✅ Title
   title: {
     default: "Webixle — Web Development, App Development & Digital Services",
     template: "%s | Webixle",
   },
-
-  // ✅ Description
   description:
     "Webixle provides professional Web Development, Mobile App Development, UI/UX Design, Graphic Designing, Video Editing & Social Media Marketing services. Get a free quote today!",
-
-  // ✅ Keywords
   keywords: [
     "web development company",
     "mobile app development",
@@ -48,18 +43,12 @@ export const metadata: Metadata = {
     "software company india",
     "web design mumbai",
   ],
-
-  // ✅ Authors
   authors: [{ name: "Webixle", url: "https://webixle.com" }],
   creator: "Webixle",
   publisher: "Webixle",
-
-  // ✅ Canonical URL
   alternates: {
     canonical: "https://webixle.com",
   },
-
-  // ✅ Open Graph — Facebook, LinkedIn, WhatsApp
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -70,7 +59,7 @@ export const metadata: Metadata = {
       "Professional Web Development, Mobile App Development, UI/UX Design, Graphic Designing, Video Editing & Social Media Marketing. Transform your business with Webixle.",
     images: [
       {
-        url: "https://webixle.com/og-image.png", // ⚠️ 1200x630 image banana hai
+        url: "https://webixle.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Webixle - Web Development & Digital Services",
@@ -78,19 +67,15 @@ export const metadata: Metadata = {
       },
     ],
   },
-
-  // ✅ Twitter Card
   twitter: {
     card: "summary_large_image",
-    site: "@webixle",       // ⚠️ apna twitter handle
+    site: "@webixle",
     creator: "@webixle",
     title: "Webixle — Web Development, App Development & Digital Services",
     description:
       "Professional Web Development, Mobile App Development, UI/UX Design, Graphic Designing, Video Editing & Social Media Marketing services.",
     images: ["https://webixle.com/og-image.png"],
   },
-
-  // ✅ Robots
   robots: {
     index: true,
     follow: true,
@@ -104,23 +89,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-
-  // ✅ Icons
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-
-  // ✅ Manifest
   manifest: "/site.webmanifest",
-
-  // ✅ Google Search Console Verification
-  verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE", // ⚠️ Search Console se lo
-  },
-
-  // ✅ Category
+  
   category: "technology",
 };
 
@@ -137,7 +112,7 @@ const jsonLd = {
     "Webixle provides Web Development, Mobile App Development, UI/UX Design, Graphic Designing, Video Editing & Social Media Marketing services.",
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+91-98765-43210", // ⚠️ apna number daalo
+    telephone: "+91-98765-43210",
     contactType: "customer service",
     availableLanguage: ["English", "Hindi"],
   },
@@ -217,11 +192,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={inter.variable}
-    >
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head>
         {/* ✅ JSON-LD Schema Markup */}
         <script
@@ -232,21 +203,25 @@ export default function RootLayout({
 
       <body className="min-h-screen bg-(--bg-primary) text-(--text-primary) antialiased">
 
-        {/* ✅ Google Analytics Scripts */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
+        {/* ✅ Google Analytics — Sirf tab load hoga jab GA_ID exist kare */}
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-screen flex-col">
