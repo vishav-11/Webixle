@@ -34,8 +34,8 @@ const CONTACT_OPTIONS = [
     icon: Phone,
     label: "Schedule a Call",
     description: "Book a free 30-min discovery call",
-    action: "Book Now",
-    href: "/contact",
+    action: "Call Now",
+    href: "tel:+918796610171",
     gradient: "from-blue-500 to-cyan-500",
     bgGradient: "from-blue-500/10 to-cyan-500/5",
     border: "border-blue-500/20",
@@ -47,7 +47,7 @@ const CONTACT_OPTIONS = [
     label: "WhatsApp Chat",
     description: "Chat directly — reply in minutes",
     action: "Chat Now",
-    href: "https://wa.me/yourphonenumber",
+    href: "https://wa.me/+918796610171",
     gradient: "from-green-500 to-emerald-500",
     bgGradient: "from-green-500/10 to-emerald-500/5",
     border: "border-green-500/20",
@@ -59,7 +59,7 @@ const CONTACT_OPTIONS = [
     label: "Send an Email",
     description: "Drop your requirements in detail",
     action: "Email Us",
-    href: "mailto:hello@yourcompany.com",
+    href: "mailto:contact@webixle.com.com",
     gradient: "from-accent-500 to-purple-500",
     bgGradient: "from-accent-500/10 to-purple-500/5",
     border: "border-accent-500/20",
@@ -367,7 +367,7 @@ export const CTABanner: React.FC = () => {
                 gap-3 animate-in-delay-3"
             >
               <Link
-                href="/contact"
+                href="tel:+918796610171"
                 className="group flex items-center gap-2 px-7 py-3 rounded-xl
                   bg-white text-primary-700 font-bold text-sm
                   hover:bg-primary-50 transition-all duration-200 active:scale-95
@@ -380,7 +380,7 @@ export const CTABanner: React.FC = () => {
                 Book Free Discovery Call
               </Link>
               <Link
-                href="https://wa.me/yourphonenumber"
+                href="https://wa.me/+918796610171"
                 target="_blank"
                 className="flex items-center gap-2 px-7 py-3 rounded-xl
                   bg-white/10 backdrop-blur-sm border border-white/25
