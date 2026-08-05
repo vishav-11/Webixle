@@ -30,16 +30,16 @@ const FOOTER_LINKS = {
   ],
   Company: [
     { label: "About Us", href: "/about" },
-    { label: "Our Work", href: "/portfolio" },
+    // { label: "Our Work", href: "/portfolio" },
     { label: "Blog", href: "/blog" },
-    { label: "Careers", href: "/careers" },
+    // { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ],
   Legal: [
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "Cookie Policy", href: "/cookies" },
-    { label: "Refund Policy", href: "/refund" },
+    { label: "Privacy Policy", href: "/privacyPolicy" },
+    { label: "Terms of Service", href: "/term-and-service" },
+    // { label: "Cookie Policy", href: "/cookies" },
+    // { label: "Refund Policy", href: "/refund" },
   ],
 };
 

@@ -193,28 +193,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <head>
-        {/* ✅ JSON-LD Schema Markup */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
-
       <body className="min-h-screen bg-(--bg-primary) text-(--text-primary) antialiased">
 
-        {/* ✅ Google Analytics — Sirf tab load hoga jab GA_ID exist kare */}
+        
+
+        {/* Google Analytics */}
         {GA_ID && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
               strategy="afterInteractive"
             />
+
             <Script id="google-analytics" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
+                
+                function gtag(){
+                  dataLayer.push(arguments);
+                }
+
                 gtag('js', new Date());
+
                 gtag('config', '${GA_ID}', {
                   page_path: window.location.pathname,
                 });
@@ -223,13 +223,22 @@ export default function RootLayout({
           </>
         )}
 
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+
+            <main className="flex-1">
+              {children}
+            </main>
+
             <Footer />
           </div>
         </ThemeProvider>
+
       </body>
     </html>
   );

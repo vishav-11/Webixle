@@ -468,7 +468,7 @@ export const Navbar: React.FC = () => {
                     </motion.button>
                   </Link> */}
 
-                  <Link href="/demo" className="block" onClick={() => setIsMobileOpen(false)}>
+                  <Link href="/contact" className="block" onClick={() => setIsMobileOpen(false)}>
                     <motion.button whileHover={{ scale: 1.01, boxShadow: "0 8px 25px rgba(99,102,241,0.45)" }} whileTap={{ scale: 0.99 }} className="relative w-full py-2.5 rounded-2xl text-sm font-semibold text-[#9576F8] overflow-hidden group" style={{ background: "linear-linear(135deg, #6366f1 0%, #d946ef 100%)", boxShadow: "0 4px 15px rgba(99,102,241,0.35)" }}>
                       <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                       <span className="relative flex items-center justify-center gap-2 fill-[#9576F8]"><Zap size={14} className="fill-[#9576F8]" />Get Started Free</span>
